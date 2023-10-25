@@ -41,7 +41,7 @@ class bd():
         self.conn.close(); print('Desconectando o Banco de Dados')
     def montatabelas_f1(self):
         self.conecta_bd_f1()
-        # Criando a tabela
+        # Criando a tabela da página de inicio
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS alunos(
                 cod INTEGER PRIMARY KEY, 
@@ -52,7 +52,43 @@ class bd():
                 data_entregada CHAR(15)
             );
         ''')
-        self.conn.commit(); print('Banco de Dados criado')
+        self.conn.commit(); print('Banco de Dados 1 criado (Coleta)')
+        # Criando a tabela do nome do aluno
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS identidade(
+                cod INTEGER PRIMARY KEY, 
+                nome CHAR(40) NOT NULL,
+                serie CHAR(10) NOT NULL,
+                telefone CHAR(20),
+                identificacao CHAR(20),
+                email CHAR(40)
+            );
+        ''')
+        self.conn.commit(); print('Banco de Dados 2 criado (Alunos)')
+        # Criando a tabela de livros
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS livros(
+                cod INTEGER PRIMARY KEY, 
+                nome_l CHAR(40),
+                ano CHAR(10),
+                autor CHAR(20),
+                genero CHAR(20)
+            );
+        ''')
+        self.conn.commit(); print('Banco de Dados 3 criado (Livros)')
+        # Criando a tabela de escolas
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS escolas(
+                cod INTEGER PRIMARY KEY, 
+                nome_e CHAR(30),
+                rua CHAR(20),
+                numero CHAR(6),
+                bairro CHAR(10),
+                telefone_e CHAR(15),
+                email_e CHAR(30)
+            );
+        ''')
+        self.conn.commit(); print('Banco de Dados 4 criado (Escolas)')
         self.desconecta_bd_f1()
     #def usuarios(self):
 
