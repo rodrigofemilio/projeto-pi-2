@@ -189,12 +189,12 @@ class pdf(bd):
 
 class Funcs(pdf,bd):
     def limpar_f1(self):
-        self.entry_aluno1.delete(0, END)
-        self.entry_livro1.delete(0, END)
-        self.entry_cod1.delete(0, END)
+        self.f1_entry_aluno.delete(0, END)
+        self.f1_entry_livro.delete(0, END)
+        self.f1_entry_cod.delete(0, END)
         self.entry_data_entrega.delete(0, END)
         self.entry_data_retirada.delete(0, END)
-        self.entry_serie.delete(0, END)
+        self.f1_entry_serie.delete(0, END)
     def limpa_f2(self):
         self.entry_aluno2.delete(0, END)
         self.entry_serie2.delete(0, END)
@@ -481,13 +481,12 @@ class Application(Funcs,pdf,bd):
         self.cores()
         self.tela1()
         self.frames_abas()
-        self.frames_cadastro()
+        self.cadastro()
         self.aba_login()
         self.date_today()
-        self.labels_f1()
-        self.botoes_f1()
-        self.entry_f1()
-        self.entry_button_Label_f2()
+        self.labels()
+        self.botoes()
+        self.entry()
         self.treeview_f1()
         self.treeview_f2()
         self.montatabelas_f1()
@@ -517,92 +516,110 @@ class Application(Funcs,pdf,bd):
         self.root.minsize(width=360, height=300)
     def aba_login(self):
         # Label de Login na parte superior
-        self.label_tit = Label(self.frame_tela0,text='LOGIN',bg=self.cor1,fg=self.cor3,
+        self.l_label_tit = Label(self.frame_tela0,text='LOGIN',bg=self.cor1,fg=self.cor3,
                                 font=('Helvetica',30))
-        self.label_tit.place(relx=0.02,rely=0.001)
+        self.l_label_tit.place(relx=0.02,rely=0.001)
         # Linha de separação do Login na parte superior
-        self.linha_tit = Label(self.frame_tela0,text='',bg=self.cor9,
+        self.l_linha_tit = Label(self.frame_tela0,text='',bg=self.cor9,
                                 font=('Helvetica',1))
-        self.linha_tit.place(relx=0.02,rely=0.12,relwidth=0.96)
+        self.l_linha_tit.place(relx=0.02,rely=0.12,relwidth=0.96)
         # Label de nome de usuario
-        self.l_usuario = Label(self.frame_tela0,text='Nome',bg=self.cor1,fg=self.cor3,
+        self.l_label_usuario = Label(self.frame_tela0,text='Nome',bg=self.cor1,fg=self.cor3,
                                 font=('Helvetica',13))
-        self.l_usuario.place(relx=0.06,rely=0.2)
+        self.l_label_usuario.place(relx=0.06,rely=0.2)
         # Entry de usuario
-        self.entry_usu1 = Entry(self.frame_tela0,
+        self.l_entry_usu = Entry(self.frame_tela0,
                                     bg=self.cor11,bd=3,highlightbackground=self.cor9,relief=FLAT,
                                     highlightthickness=2,highlightcolor=self.cor9,fg=self.cor2,insertontime='700')
-        self.entry_usu1.place(relx=0.02,rely=0.27,relheight=0.07,relwidth=0.6)
+        self.l_entry_usu.place(relx=0.02,rely=0.27,relheight=0.07,relwidth=0.6)
         # Label de senha do usuario
-        self.l_sen = Label(self.frame_tela0,text='Senha',bg=self.cor1,fg=self.cor3,
+        self.l_label_senha = Label(self.frame_tela0,text='Senha',bg=self.cor1,fg=self.cor3,
                                 font=('Helvetica',13))
-        self.l_sen.place(relx=0.06,rely=0.4)
+        self.l_label_senha.place(relx=0.06,rely=0.4)
         # Comando senha
         def valida_usuario():
             print()
         # Entry de senha
-        self.entry_sen1 = Entry(self.frame_tela0,show='*',
+        self.l_entry_sen1 = Entry(self.frame_tela0,show='*',
                                     bg=self.cor11,bd=3,highlightbackground=self.cor9,relief=FLAT,
                                     highlightthickness=2,highlightcolor=self.cor9,fg=self.cor2,insertontime='700')
-        self.entry_sen1.place(relx=0.02,rely=0.47,relheight=0.07,relwidth=0.6)
+        self.l_entry_sen1.place(relx=0.02,rely=0.47,relheight=0.07,relwidth=0.6)
         # Comando Checkbox
         c_v1=IntVar(value=0)
         def show_pass():
             if (c_v1.get() == 1):
-                self.entry_sen1.config(show='')
+                self.l_entry_sen1.config(show='')
             else:
-                self.entry_sen1.config(show='*')
+                self.l_entry_sen1.config(show='*')
         # Checkbox e label de mostrar a senha
-        self.ck_senha = Checkbutton(self.frame_tela0,bg=self.cor1,activebackground=self.cor1, bd=3,
+        self.l_ck_senha = Checkbutton(self.frame_tela0,bg=self.cor1,activebackground=self.cor1, bd=3,
                                     command=show_pass,variable=c_v1)
-        self.ck_senha.place(relx=0.02, rely=0.55)
-        self.l_ck = Label(self.frame_tela0,text='Mostrar senha',bg=self.cor1,fg=self.cor3,
+        self.l_ck_senha.place(relx=0.02, rely=0.55)
+        self.l_label_ck = Label(self.frame_tela0,text='Mostrar senha',bg=self.cor1,fg=self.cor3,
                                 font=('Helvetica', 10))
-        self.l_ck.place(relx=0.07,rely=0.56)
+        self.l_label_ck.place(relx=0.07,rely=0.56)
         # Botão de Login
-        self.bt_login = Button(self.frame_tela0,
+        self.l_bt_login = Button(self.frame_tela0,
                                     bg=self.cor9,bd=0,activebackground=self.cor11,command=self.frame_tela0.destroy,
                                     highlightbackground=self.cor2,highlightthickness=1,fg=self.cor3,
                                     text='Entrar',font=('Verdana', 12),cursor='hand2')
-        self.bt_login.place(relx=0.05, rely=0.63, relheight=0.08, relwidth=0.2)
+        self.l_bt_login.place(relx=0.05, rely=0.63, relheight=0.08, relwidth=0.2)
         # Botão de Cancelar
-        self.bt_can = Button(self.frame_tela0,
+        self.l_bt_can = Button(self.frame_tela0,
                                     bg=self.cor8,bd=0,activebackground=self.cor8,command=root.destroy,
                                     highlightbackground=self.cor2,highlightthickness=1,fg=self.cor3,
                                     text='Cancelar',font=('Verdana', 12),cursor='hand2')
-        self.bt_can.place(relx=0.29, rely=0.63, relheight=0.08, relwidth=0.2)
+        self.l_bt_can.place(relx=0.29, rely=0.63, relheight=0.08, relwidth=0.2)
         # Função de não existe
         def nao_existe():
             messagebox.showinfo(title='Erro', message='Essa função infelizmente ainda não existe')
         # Botão de Esqueceu a senha
-        self.bt_e_senha = Button(self.frame_tela0,
+        self.l_bt_e_senha = Button(self.frame_tela0,
                                     bg=self.cor1,bd=0,activebackground=self.cor1,command=nao_existe,
                                     highlightbackground=self.cor2,highlightthickness=1,fg=self.cor9,activeforeground=self.cor9,
                                     text='Esqueceu a senha?',font=('Verdana',8),cursor='hand2')
-        self.bt_e_senha.place(relx=0.01, rely=0.82)
+        self.l_bt_e_senha.place(relx=0.01, rely=0.82)
         # Botão de não tem usuario
-        self.bt_n_lo = Button(self.frame_tela0,
+        self.l_bt_n_lo = Button(self.frame_tela0,
                                     bg=self.cor1,bd=0,activebackground=self.cor1,command=nao_existe,
                                     highlightbackground=self.cor2,highlightthickness=1,fg=self.cor9,activeforeground=self.cor9,
                                     text='Ainda não tem cadastro?',font=('Verdana',8),cursor='hand2')
-        self.bt_n_lo.place(relx=0.01, rely=0.9)
-    def labels_f1(self):
+        self.l_bt_n_lo.place(relx=0.01, rely=0.9)
+    def labels(self):
+
+        ################### Tela 1 Inicio ###################
+
         # Label aluno tela 1
-        self.label_aluno1 = Label(self.frame_tela1, text='Aluno', bg=self.cor1, fg=self.cor3,
+        self.f1_label_aluno = Label(self.frame_tela1, text='Aluno', bg=self.cor1, fg=self.cor3,
                                 font=('Verdana', 10, 'bold'))
-        self.label_aluno1.place(relx=0.02, rely=0.001, relheight=0.08, relwidth=0.17)
+        self.f1_label_aluno.place(relx=0.02, rely=0.001, relheight=0.08, relwidth=0.17)
         # Label serie tela 1
-        self.label_serie1 = Label(self.frame_tela1, text='Serie do aluno', bg=self.cor1, fg=self.cor3,
+        self.f1_label_serie = Label(self.frame_tela1, text='Serie do aluno', bg=self.cor1, fg=self.cor3,
                                 font=('Verdana', 10, 'bold'))
-        self.label_serie1.place(relx=0.65, rely=0.001, relheight=0.08, relwidth=0.30)
+        self.f1_label_serie.place(relx=0.65, rely=0.001, relheight=0.08, relwidth=0.30)
         # Label livro tela 1
-        self.label_livro1 = Label(self.frame_tela1, text='Livro', bg=self.cor1, fg=self.cor3,
+        self.f1_label_livro = Label(self.frame_tela1, text='Livro', bg=self.cor1, fg=self.cor3,
                                 font=('Verdana', 10, 'bold'))
-        self.label_livro1.place(relx=0.02, rely=0.183, relheight=0.08, relwidth=0.17)
+        self.f1_label_livro.place(relx=0.02, rely=0.183, relheight=0.08, relwidth=0.17)
         # Label Cadastros
-        self.label_cadastro1 = Label(self.frame_tela1, text='Cadastros', bg=self.cor1, fg=self.cor3,
+        self.f1_label_cadastro = Label(self.frame_tela1, text='Cadastros', bg=self.cor1, fg=self.cor3,
                                 font=('Verdana', 10, 'bold'))
-        self.label_cadastro1.place(relx=0.02, rely=0.35, relheight=0.08, relwidth=0.25)
+        self.f1_label_cadastro.place(relx=0.02, rely=0.35, relheight=0.08, relwidth=0.25)
+
+        ################### Tela 2 Consulta ###################
+
+        # Label pesq aluno
+        self.f2_l_aluno = Label(self.frame_tela2, text='Aluno', bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'))
+        self.f2_l_aluno.place(relx=0.014, rely=0.002, relheight=0.08, relwidth=0.17)
+        # Label pesq serie
+        self.f2_l_serie = Label(self.frame_tela2, text='Ano', bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'))
+        self.f2_l_serie.place(relx=0.27, rely=0.002, relheight=0.08, relwidth=0.17)
+        # Label pesq livro
+        self.f2_l_livro = Label(self.frame_tela2, text='Livro', bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'))
+        self.f2_l_livro.place(relx=0.528, rely=0.002, relheight=0.08, relwidth=0.17)
     def frames_abas(self):
         # Personalizando as tabs
         abas_style = ttk.Style()
@@ -641,56 +658,63 @@ class Application(Funcs,pdf,bd):
         self.frame_tela0 = Frame(root, bd=4, bg=self.cor1,
                                 highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
         self.frame_tela0.place(relx=0, rely=0, relwidth=1, relheight=1)
-    def frames_cadastro(self):
-        print()
+    def cadastro(self):
         # Frames
         self.frame_cad1 = Frame(self.frame_tela3, bd=4, bg=self.cor1,
                                 highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
         self.frame_cad1.place(relx=0, rely=0, relwidth=1, relheight=0.32)
         self.frame_cad2 = Frame(self.frame_tela3, bd=4, bg=self.cor1,
-                                highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
+                                    highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
         self.frame_cad2.place(relx=0, rely=0.34, relwidth=1, relheight=0.32)
         self.frame_cad3 = Frame(self.frame_tela3, bd=4, bg=self.cor1,
-                                highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
+                                    highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
         self.frame_cad3.place(relx=0, rely=0.68, relwidth=1, relheight=0.32)
-    def botoes_f1(self):
-        self.print = PhotoImage(file='print.png')
+    def botoes(self):
+        
+        ################### Tela 1 Inicio ###################
+
+        self.print = PhotoImage(file='print.png') # Imagem de impressora
         # Botão Cadastrar aluno
-        self.bt_cadastrar = Button(self.frame_tela1,
+        self.f1_bt_cadastrar = Button(self.frame_tela1,
                                     bg=self.cor9, bd=0, activebackground=self.cor11, command=self.cadastrar_f1,
                                     highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
                                     text='Cadastrar', font=('Verdana', 10), cursor='hand2')
-        self.bt_cadastrar.place(relx=0.555, rely=0.33, relheight=0.08, relwidth=0.2)
+        self.f1_bt_cadastrar.place(relx=0.555, rely=0.33, relheight=0.08, relwidth=0.2)
         # Botão imprimir cadastro
-        self.bt_imprimir1 = Button(self.frame_tela1,
+        self.f1_bt_imprimir1 = Button(self.frame_tela1,
                                     bg=self.cor9, bd=0, activebackground=self.cor9, command=self.geracomprovante,
                                     highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
                                     text='Imprimir', font=('Verdana', 10), cursor='hand2')
-        self.bt_imprimir1.place(relx=0.511, rely=0.92, relheight=0.08, relwidth=0.2)
-        self.bt_imprimir = Button(self.frame_tela1,
+        self.f1_bt_imprimir1.place(relx=0.511, rely=0.92, relheight=0.08, relwidth=0.2)
+        self.f1_bt_imprimir = Button(self.frame_tela1,
                                     bg=self.cor9, bd=0, activebackground=self.cor9, command=self.geracomprovante,
                                     highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
                                     image=self.print, font=('Verdana', 10), cursor='hand2')
-        self.bt_imprimir.place(relx=0.451, rely=0.92, relheight=0.08, relwidth=0.08)
+        self.f1_bt_imprimir.place(relx=0.451, rely=0.92, relheight=0.08, relwidth=0.08)
         # Botão Limpar informações inseridas
-        self.bt_limpar = Button(self.frame_tela1, command=self.limpar_f1,
+        self.f1_bt_limpar = Button(self.frame_tela1, command=self.limpar_f1,
                                 bg=self.cor8, bd=0, activebackground=self.cor11,
                                 highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
                                 text='Limpar', font=('Verdana', 10), cursor='hand2')
-        self.bt_limpar.place(relx=0.775, rely=0.33, relheight=0.08, relwidth=0.2)
+        self.f1_bt_limpar.place(relx=0.775, rely=0.33, relheight=0.08, relwidth=0.2)
         # Botão excluir cadastro
-        self.bt_excluir1 = Button(self.frame_tela1, command=self.excluir_f1,
+        self.f1_bt_excluir = Button(self.frame_tela1, command=self.excluir_f1,
                                 bg=self.cor8, bd=0, activebackground=self.cor11,
                                 highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
                                 text='Excluir', font=('Verdana', 10), cursor='hand2')
-        self.bt_excluir1.place(relx=0.02, rely=0.92, relheight=0.08, relwidth=0.2)
+        self.f1_bt_excluir.place(relx=0.02, rely=0.92, relheight=0.08, relwidth=0.2)
         # Botão alterar cadastro
-        self.bt_alterar1 = Button(self.frame_tela1, command=self.alterar_f1,
+        self.f1_bt_alterar = Button(self.frame_tela1, command=self.alterar_f1,
                                 bg=self.cor6, bd=0, activebackground=self.cor11,
                                 highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
                                 text='Alterar', font=('Verdana', 10), cursor='hand2')
-        self.bt_alterar1.place(relx=0.235, rely=0.92, relheight=0.08, relwidth=0.2)
-    def entry_f1(self):
+        self.f1_bt_alterar.place(relx=0.235, rely=0.92, relheight=0.08, relwidth=0.2)
+        
+        ################### Tela 2 Consulta ###################
+    def entry(self):
+
+        ################### Tela 1 Inicio ###################
+
         ##### Entrys das datas (não aparecem na tela principal)
         # Criação e inserção da data de retirada
         self.entry_data_retirada = Entry(self.frame_tela1)
@@ -698,44 +722,45 @@ class Application(Funcs,pdf,bd):
         # Criação e inserção da data de entrega
         self.entry_data_entrega = Entry(self.frame_tela1)
         self.entry_data_entrega.insert(0, self.format_data_entrega)
+        ######################################################
         # Entry de codigo tela 1
-        self.entry_cod1 = Entry(self.frame_tela1,
+        self.f1_entry_cod = Entry(self.frame_tela1,
                                     bg=self.cor1, bd=3, highlightbackground=self.cor1, relief=FLAT, justify='center',
                                     highlightthickness=2, highlightcolor=self.cor1,fg=self.cor3, insertontime='0', cursor='arrow')
-        self.entry_cod1.place(relx=0.45, rely=0.07, relheight=0.08, relwidth=0.17)
+        self.f1_entry_cod.place(relx=0.45, rely=0.07, relheight=0.08, relwidth=0.17)
         # Entry de nome de aluno tela 1
-        self.entry_aluno1 = Entry(self.frame_tela1,
+        self.f1_entry_aluno = Entry(self.frame_tela1,
                                     bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        self.entry_aluno1.place(relx=0.02, rely=0.07, relheight=0.08, relwidth=0.4)
+        self.f1_entry_aluno.place(relx=0.02, rely=0.07, relheight=0.08, relwidth=0.4)
         # Entry de nome de livro tela 1
-        self.entry_livro1 = Entry(self.frame_tela1,
+        self.f1_entry_livro = Entry(self.frame_tela1,
                                     bg=self.cor11, bd=0, highlightbackground=self.cor6, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor10, fg=self.cor2, insertontime='0')
-        self.entry_livro1.place(relx=0.02, rely=0.25, relheight=0.08, relwidth=0.4)
+        self.f1_entry_livro.place(relx=0.02, rely=0.25, relheight=0.08, relwidth=0.4)
+
         ##################################################################################
         #######################Drop-Down e Entry Drop-Down################################
         ##################################################################################
         # Variavel do Drop-Down de serie do aluno tela 1
-        self.anos_escolares = ('1° Ano', '2° Ano', '3° Ano', '4° Ano', '5° Ano', '6° Ano', '7° Ano', '8° Ano', '9° Ano')
-        self.variavel_serie = StringVar()
-        self.variavel_serie.set('Selecionar')
+        self.f1_anos_escolares = ('1° Ano', '2° Ano', '3° Ano', '4° Ano', '5° Ano', '6° Ano', '7° Ano', '8° Ano', '9° Ano')
+        self.f1_variavel_serie = StringVar()
+        self.f1_variavel_serie.set('Selecionar')
         # Criação do Drop-Down de serie do aluno tela 1
-        self.drop_serie = OptionMenu(self.frame_tela1, self.variavel_serie, *self.anos_escolares,
+        self.f1_drop_serie = OptionMenu(self.frame_tela1, self.f1_variavel_serie, *self.f1_anos_escolares,
                                     command=self.optionmenu)
-        self.drop_serie.place(relx=0.65, rely=0.07, relheight=0.08, relwidth=0.29)
-        self.drop_serie.config(bg=self.cor11, bd=0, highlightbackground=self.cor10,  relief=FLAT,
+        self.f1_drop_serie.place(relx=0.65, rely=0.07, relheight=0.08, relwidth=0.29)
+        self.f1_drop_serie.config(bg=self.cor11, bd=0, highlightbackground=self.cor10,  relief=FLAT,
                                 fg=self.cor7, font=('Verdana', 11), indicatoron='0', direction='below',
                                 cursor='hand2')
         # Entry Serie do aluno
-        self.entry_serie = Entry(self.frame_tela1,
+        self.f1_entry_serie = Entry(self.frame_tela1,
                                     bg=self.cor1, bd=0, highlightbackground=self.cor1, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor1, fg='green', insertontime='0', cursor='arrow')
-        self.entry_serie.place(relx=0.6, rely=0.15, relheight=0.08, relwidth=0.390)
-        ##################################################################################
-        #######################Drop-Down e Entry Drop-Down################################
-        ##################################################################################
-    def entry_t2(self):
+        self.f1_entry_serie.place(relx=0.6, rely=0.15, relheight=0.08, relwidth=0.390)
+
+        ################### Tela 2 Consulta ###################
+
         # Entry código da Tela de informações
         self.e_c = Entry(self.root)
         # Entry nome da Tela de informações
@@ -748,37 +773,30 @@ class Application(Funcs,pdf,bd):
         self.e_d1 = Entry(self.root)
         # Entry data2 da Tela de informações
         self.e_d2 = Entry(self.root)
-    def entry_button_Label_f2(self):
         # Entry pesq aluno
-        self.l_aluno2 = Label(self.frame_tela2, text='Aluno', bg=self.cor1, fg=self.cor3,
-                                font=('Verdana', 10, 'bold'))
-        self.l_aluno2.place(relx=0.014, rely=0.002, relheight=0.08, relwidth=0.17)
-        self.entry_aluno2 = Entry(self.frame_tela2,
+        self.f2_entry_aluno = Entry(self.frame_tela2,
                                     bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor9,fg=self.cor7, insertontime='0')
-        self.entry_aluno2.place(relx=0.01, rely=0.08, relheight=0.08, relwidth=0.24)
+        self.f2_entry_aluno.place(relx=0.01, rely=0.08, relheight=0.08, relwidth=0.24)
         # Entry pesq serie
-        self.l_serie2 = Label(self.frame_tela2, text='Ano', bg=self.cor1, fg=self.cor3,
-                                font=('Verdana', 10, 'bold'))
-        self.l_serie2.place(relx=0.27, rely=0.002, relheight=0.08, relwidth=0.17)
-        self.entry_serie2 = Entry(self.frame_tela2,
+        self.f2_entry_serie = Entry(self.frame_tela2,
                                     bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor9,fg=self.cor7, insertontime='0')
-        self.entry_serie2.place(relx=0.27, rely=0.08, relheight=0.08, relwidth=0.24)
+        self.f2_entry_serie.place(relx=0.27, rely=0.08, relheight=0.08, relwidth=0.24)
         # Entry pesq livro
-        self.l_livro2 = Label(self.frame_tela2, text='Livro', bg=self.cor1, fg=self.cor3,
-                                font=('Verdana', 10, 'bold'))
-        self.l_livro2.place(relx=0.528, rely=0.002, relheight=0.08, relwidth=0.17)
-        self.entry_livro2 = Entry(self.frame_tela2,
+        self.f2_entry_livro = Entry(self.frame_tela2,
                                     bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor9, fg=self.cor7, insertontime='0')
-        self.entry_livro2.place(relx=0.528, rely=0.08, relheight=0.08, relwidth=0.24)
-        # Button pesq
-        self.bt_pesq2 = Button(self.frame_tela2, command=self.pesquisar_f2,
+        self.f2_entry_livro.place(relx=0.528, rely=0.08, relheight=0.08, relwidth=0.24)
+        # Button pesquisa
+        self.f2_bt_pesquisa = Button(self.frame_tela2, command=self.pesquisar_f2,
                                     bg=self.cor6, bd=0, activebackground=self.cor9, activeforeground=self.cor3,
                                     highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
                                     text='Pesquisar', font=('Verdana', 10), cursor='hand2')
-        self.bt_pesq2.place(relx=0.79, rely=0.08, relheight=0.08, relwidth=0.19)
+        self.f2_bt_pesquisa.place(relx=0.79, rely=0.08, relheight=0.08, relwidth=0.19)
+
+        ################### Tela 3 Cadastro ###################
+
     def treeview_f1(self):
         # Criação da Treeview
         self.inser_bd = ttk.Treeview(self.frame_tela1, columns=('col1', 'col2', 'col3', 'col4', 'col5', 'col6'))
@@ -880,62 +898,62 @@ class Application(Funcs,pdf,bd):
         ###############################################
         # msg BT Limpar Frame 1
         self.msg_limpar = Pmw.Balloon(self.frame_tela1)
-        self.msg_limpar.bind(self.bt_limpar, msg_bt_limpar)
+        self.msg_limpar.bind(self.f1_bt_limpar, msg_bt_limpar)
         # msg BT Cadastrar Frame 1
         self.msg_cadastrar = Pmw.Balloon(self.frame_tela1)
-        self.msg_cadastrar.bind(self.bt_cadastrar, msg_bt_cadastrar)
+        self.msg_cadastrar.bind(self.f1_bt_cadastrar, msg_bt_cadastrar)
         # msg BT Alterar Frame 1
         self.msg_alterar = Pmw.Balloon(self.frame_tela1)
-        self.msg_alterar.bind(self.bt_alterar1, msg_bt_alterar)
+        self.msg_alterar.bind(self.f1_bt_alterar, msg_bt_alterar)
         # msg BT Excluir Frame 1
         self.msg_excluir = Pmw.Balloon(self.frame_tela1)
-        self.msg_excluir.bind(self.bt_excluir1, msg_bt_excluir)
+        self.msg_excluir.bind(self.f1_bt_excluir, msg_bt_excluir)
         # msg BT Imprimir Frame 1
         self.msg_imprimir = Pmw.Balloon(self.frame_tela1)
         self.msg_imprimir1 = Pmw.Balloon(self.frame_tela1)
-        self.msg_imprimir.bind(self.bt_imprimir, msg_bt_imprimir)
-        self.msg_imprimir1.bind(self.bt_imprimir1, msg_bt_imprimir)
+        self.msg_imprimir.bind(self.f1_bt_imprimir, msg_bt_imprimir)
+        self.msg_imprimir1.bind(self.f1_bt_imprimir1, msg_bt_imprimir)
         # msg Entry Nome Frame 1
         self.msg_nome1 = Pmw.Balloon(self.frame_tela1)
-        self.msg_nome1.bind(self.entry_aluno1, msg_et_nome)
+        self.msg_nome1.bind(self.f1_entry_aluno, msg_et_nome)
         # msg Entry Livro Frame 1
         self.msg_livro1 = Pmw.Balloon(self.frame_tela1)
-        self.msg_livro1.bind(self.entry_livro1, msg_et_livro)
+        self.msg_livro1.bind(self.f1_entry_livro, msg_et_livro)
         # msg Menu serie Frame 1
         self.msg_serie1 = Pmw.Balloon(self.frame_tela1)
-        self.msg_serie1.bind(self.drop_serie, msg_et_serie)
+        self.msg_serie1.bind(self.f1_drop_serie, msg_et_serie)
         #######________Tela de Consulta_________#######
         # msg BT pesquisar Frame 2
         self.msg_pesq = Pmw.Balloon(self.frame_tela2)
-        self.msg_pesq.bind(self.bt_pesq2, msg_bt_pesquisar)
+        self.msg_pesq.bind(self.f2_bt_pesquisa, msg_bt_pesquisar)
         # msg Entry Nome Frame 2
         self.msg_nome2 = Pmw.Balloon(self.frame_tela2)
-        self.msg_nome2.bind(self.entry_aluno2, msg_et_nome)
+        self.msg_nome2.bind(self.f2_entry_aluno, msg_et_nome)
         # msg Entry Livro Frame 2
         self.msg_livro2 = Pmw.Balloon(self.frame_tela2)
-        self.msg_livro2.bind(self.entry_livro2, msg_et_livro)
+        self.msg_livro2.bind(self.f2_entry_livro, msg_et_livro)
         # msg Entry serie Frame 2
         self.msg_serie2 = Pmw.Balloon(self.frame_tela2)
-        self.msg_serie2.bind(self.entry_serie2, msg_et_serie)
+        self.msg_serie2.bind(self.f2_entry_serie, msg_et_serie)
         #######________Tela de Login_________#######
         # msg Label Login Frame login
         self.msg_l_login = Pmw.Balloon(self.frame_tela0)
-        self.msg_l_login.bind(self.label_tit, msg_l_login)
+        self.msg_l_login.bind(self.l_label_tit, msg_l_login)
         # msg Entry usuario Frame login
         self.msg_nome_login = Pmw.Balloon(self.frame_tela0)
-        self.msg_nome_login.bind(self.entry_usu1, msg_nome_login)
+        self.msg_nome_login.bind(self.l_entry_usu, msg_nome_login)
         # msg Entry senha Frame login
         self.msg_senha_login = Pmw.Balloon(self.frame_tela0)
-        self.msg_senha_login.bind(self.entry_sen1, msg_senha_login)
+        self.msg_senha_login.bind(self.l_entry_sen1, msg_senha_login)
         # msg de mostrar senha Frame login
         self.msg_m_senha_login = Pmw.Balloon(self.frame_tela0)
-        self.msg_m_senha_login.bind(self.ck_senha, msg_m_senha_login)
-        self.msg_m_senha_login.bind(self.l_ck, msg_m_senha_login)
+        self.msg_m_senha_login.bind(self.l_ck_senha, msg_m_senha_login)
+        self.msg_m_senha_login.bind(self.l_label_ck, msg_m_senha_login)
         # msg Button Entrar Frame login
         self.msg_b_entrar = Pmw.Balloon(self.frame_tela0)
-        self.msg_b_entrar.bind(self.bt_login, msg_b_entrar)
+        self.msg_b_entrar.bind(self.l_bt_login, msg_b_entrar)
         # msg Button Cancelar Frame login
         self.msg_b_cancel = Pmw.Balloon(self.frame_tela0)
-        self.msg_b_cancel.bind(self.bt_can, msg_b_cancel)
+        self.msg_b_cancel.bind(self.l_bt_can, msg_b_cancel)
 
 Application()
