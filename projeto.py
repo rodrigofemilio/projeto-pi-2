@@ -398,7 +398,7 @@ class Funcs(pdf,bd):
         # Funções de inicio
         self.limpar_f1()
         #entry
-        self.entry_t2()
+        self.variaveis_imp2()
         # Selecionar lista
         self.pesq_bd.selection()
         # Função de duplo clique
@@ -411,10 +411,10 @@ class Funcs(pdf,bd):
             self.e_d1.insert(END, col5)
             self.e_d2.insert(END, col6)
             # Criação da tela de relatório
-            root2 = Tk()
-            root2.title(f'Aluno (a):  {(self.e_n.get())}')
-            root2.geometry('450x300')
-            self.frame = Frame(root2, bd=4, bg=self.cor1,
+            consul_t2 = Tk()
+            consul_t2.title(f'Aluno (a):  {(self.e_n.get())}')
+            consul_t2.geometry('450x300')
+            self.frame = Frame(consul_t2, bd=4, bg=self.cor1,
                             highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
             self.frame.place(relx=0, rely=0, relwidth=1, relheight=1)
             # Criação das Labels
@@ -461,7 +461,7 @@ class Funcs(pdf,bd):
             self.b_imp.place(relx=0.02, rely=0.896, relheight=0.08, relwidth=0.46)
             # Botão de fechar janela
             self.b_close = Button(self.frame,
-                                        bg=self.cor8, bd=0, activebackground=self.cor8, command=root2.destroy,
+                                        bg=self.cor8, bd=0, activebackground=self.cor8, command=consul_t2.destroy,
                                         highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
                                         text='Fechar', font=('Verdana', 10), cursor='hand2')
             self.b_close.place(relx=0.52, rely=0.896, relheight=0.08, relwidth=0.46)
@@ -474,6 +474,12 @@ class Funcs(pdf,bd):
         if self.variavel_serie != 'Selecionar':
             self.drop_serie.config(bg=self.cor11, bd=0, highlightbackground=self.cor9,  relief=FLAT,
                                 fg=self.cor7, font=('Verdana', 11), indicatoron='0', cursor='exchange', direction='flush')
+    def cad_aluno(self):
+        print()
+    def cad_livro(self):
+        print()
+    def cad_sem_atribuicao(self):
+        print()
 
 class Application(Funcs,pdf,bd):
     def __init__(self):
@@ -660,15 +666,55 @@ class Application(Funcs,pdf,bd):
         self.frame_tela0.place(relx=0, rely=0, relwidth=1, relheight=1)
     def cadastro(self):
         # Frames
+        # Frame de cima
         self.frame_cad1 = Frame(self.frame_tela3, bd=4, bg=self.cor1,
                                 highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
         self.frame_cad1.place(relx=0, rely=0, relwidth=1, relheight=0.32)
+        # Frame do meio
         self.frame_cad2 = Frame(self.frame_tela3, bd=4, bg=self.cor1,
                                     highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
         self.frame_cad2.place(relx=0, rely=0.34, relwidth=1, relheight=0.32)
+        # Frame de baixo
         self.frame_cad3 = Frame(self.frame_tela3, bd=4, bg=self.cor1,
                                     highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
         self.frame_cad3.place(relx=0, rely=0.68, relwidth=1, relheight=0.32)
+        # Label
+        # Label Aluno
+        self.cad_label_aluno = Label(self.frame_cad1, text='Cadastro de alunos', bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'), anchor='w')
+        self.cad_label_aluno.place(relx=0.02, rely=0.001, relheight=0.18, relwidth=0.35)
+        # Label Livro
+        self.cad_label_livro = Label(self.frame_cad2, text='Cadastro de livros', bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'), anchor='w')
+        self.cad_label_livro.place(relx=0.02, rely=0.001, relheight=0.18, relwidth=0.35)
+        # Label sem atribuição
+        self.cad_label_livro = Label(self.frame_cad3, text='Sem atribuição', bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'), anchor='w')
+        self.cad_label_livro.place(relx=0.02, rely=0.001, relheight=0.18, relwidth=0.35)
+        # Button
+        # Button cadastrar Aluno
+        self.cad_bt_aluno = Button(self.frame_cad1,
+                                    bg=self.cor9, bd=0, activebackground=self.cor11, command=print('aluno'),
+                                    highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                                    text='Adicionar', font=('Verdana', 12), cursor='hand2')
+        self.cad_bt_aluno.place(relx=0.75, rely=0.7, relheight=0.3, relwidth=0.25)
+        # Button cadastrar Livro
+        self.cad_bt_livro = Button(self.frame_cad2,
+                                    bg=self.cor9, bd=0, activebackground=self.cor11, command=print('livro'),
+                                    highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                                    text='Adicionar', font=('Verdana', 12), cursor='hand2')
+        self.cad_bt_livro.place(relx=0.75, rely=0.7, relheight=0.3, relwidth=0.25)
+        # Button cadastrar sem atribuição
+        self.cad_bt_ = Button(self.frame_cad3,
+                                    bg=self.cor9, bd=0, activebackground=self.cor11, command=print('Sem atribuição'),
+                                    highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                                    text='N/A', font=('Verdana', 12), cursor='hand2')
+        self.cad_bt_.place(relx=0.75, rely=0.7, relheight=0.3, relwidth=0.25)
+        # Text
+        # Text Aluno
+        # Text Livro
+        # Text sem atribuição
+
     def botoes(self):
         
         ################### Tela 1 Inicio ###################
@@ -796,7 +842,6 @@ class Application(Funcs,pdf,bd):
         self.f2_bt_pesquisa.place(relx=0.79, rely=0.08, relheight=0.08, relwidth=0.19)
 
         ################### Tela 3 Cadastro ###################
-
     def treeview_f1(self):
         # Criação da Treeview
         self.inser_bd = ttk.Treeview(self.frame_tela1, columns=('col1', 'col2', 'col3', 'col4', 'col5', 'col6'))
@@ -864,8 +909,8 @@ class Application(Funcs,pdf,bd):
         # Busca da Data atual
         self.data_hoje = date.today()
         # Soma de 7 dias na Data Atual
-        self.data_a_somar = timedelta(7)
-        self.data_para_entrega = self.data_hoje + self.data_a_somar
+        self.data_t_delta = timedelta(7)
+        self.data_para_entrega = self.data_hoje + self.data_t_delta
         # Formatação das Datas
         self.format_data_retirada = self.data_hoje.strftime("%d/%m/%Y")
         self.format_data_entrega = self.data_para_entrega.strftime("%d/%m/%Y")
