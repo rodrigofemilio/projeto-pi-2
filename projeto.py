@@ -511,7 +511,74 @@ class Funcs(pdf,bd):
             self.drop_serie.config(bg=self.cor11, bd=0, highlightbackground=self.cor9,  relief=FLAT,
                                 fg=self.cor7, font=('Verdana', 11), indicatoron='0', cursor='exchange', direction='flush')
     def cad_aluno(self):
-        print()
+        
+        cad_tela = Tk()
+        cad_tela.title(f'Aluno (a):  {(self.e_n.get())}')
+        cad_tela.geometry('800x500')
+        frame_cad = Frame(cad_tela, bd=4, bg=self.cor1,
+                            highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
+        frame_cad.place(relx=0, rely=0, relwidth=1, relheight=1)
+
+        ################# Criação das Labels #################
+
+        # Label do titulo
+        tit = Label(frame_cad, text='Dados de cadastro do aluno',
+                        bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 14, 'bold'))
+        tit.pack(padx=0,pady=0)
+        # Label de Nome
+        nome = Label(frame_cad, text='Nome do Aluno', anchor=W,
+                        bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'))
+        nome.place(relx=0.02, rely=0.128, relheight=0.08, relwidth=1)
+        # Label de Serie
+        ano = Label(frame_cad, text='Ano do aluno', anchor=W,
+                        bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'))
+        ano.place(relx=0.02, rely=0.256, relheight=0.08, relwidth=1)
+        # Label de Telefone
+        tel = Label(frame_cad, text='Telefone de contato', anchor=W,
+                        bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'))
+        tel.place(relx=0.02, rely=0.384, relheight=0.08, relwidth=1)
+        # Label de Identificação
+        ra = Label(frame_cad, text='RA do Aluno', anchor=W,
+                        bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'))
+        ra.place(relx=0.02, rely=0.512, relheight=0.08, relwidth=1)
+        # Label de E-mail
+        mail = Label(frame_cad, text='E-mail de contato', anchor=W,
+                        bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'))
+        mail.place(relx=0.02, rely=0.64, relheight=0.08, relwidth=1)
+
+        ################# Criação das Entrys #################
+
+        # Entry do Nome do Aluno selecionado
+        entry_nome = Entry(frame_cad,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
+        entry_nome.place(relx=0.25, rely=0.128, relheight=0.06, relwidth=0.3)
+        # Entry do Ano do Aluno selecionado
+        entry_ano = Entry(frame_cad,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
+        entry_ano.place(relx=0.25, rely=0.256, relheight=0.06, relwidth=0.3)
+        # Entry do Telefone do Aluno selecionado
+        entry_fone = Entry(frame_cad,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
+        entry_fone.place(relx=0.25, rely=0.384, relheight=0.06, relwidth=0.3)
+        # Entry da Identificação do Aluno selecionado
+        entry_cpf = Entry(frame_cad,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
+        entry_cpf.place(relx=0.25, rely=0.512, relheight=0.06, relwidth=0.3)
+        # Entry de E-mail do Aluno selecionado
+        entry_email = Entry(frame_cad,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
+        entry_email.place(relx=0.25, rely=0.64, relheight=0.06, relwidth=0.3)
     def cad_livro(self):
         print()
     def cad_sem_atribuicao(self):
@@ -730,7 +797,7 @@ class Application(Funcs,pdf,bd):
         # Button
         # Button cadastrar Aluno
         self.cad_bt_aluno = Button(self.frame_cad1,
-                                    bg=self.cor9, bd=0, activebackground=self.cor11, command=print('aluno'),
+                                    bg=self.cor9, bd=0, activebackground=self.cor11, command=self.cad_aluno,
                                     highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
                                     text='Adicionar', font=('Verdana', 12), cursor='hand2')
         self.cad_bt_aluno.place(relx=0.75, rely=0.7, relheight=0.3, relwidth=0.25)
@@ -750,7 +817,6 @@ class Application(Funcs,pdf,bd):
         # Text Aluno
         # Text Livro
         # Text sem atribuição
-
     def botoes(self):
         
         ################### Tela 1 Inicio ###################
