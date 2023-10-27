@@ -511,9 +511,10 @@ class Funcs(pdf,bd):
             self.f1_drop_serie.config(bg=self.cor11, bd=0, highlightbackground=self.cor9,  relief=FLAT,
                                 fg=self.cor7, font=('Verdana', 11), indicatoron='0', cursor='exchange', direction='flush')
     def cad_aluno(self):
+        
         cor1 = '#B5B3A7'
         cad_tela = Tk()
-        cad_tela.title(f'Aluno (a):  {(self.e_n.get())}')
+        cad_tela.title('Cadastro de Alunos')
         cad_tela.geometry('700x470')
         cad_tela.attributes('-topmost', True)
         cad_tela.overrideredirect(False)
@@ -698,22 +699,12 @@ class Funcs(pdf,bd):
         cad_bd.column('#5', width=1,stretch=1)
         cad_bd.column('#6', width=1,stretch=1)
         
-        ################# Personalização da Treeview #################
-        
-        treeview_style = ttk.Style()
-        treeview_style.theme_use('default') # clam , default , alt , vista
-        treeview_style.configure('Treeview',
-                                    background=self.cor1,
-                                    foreground=self.cor3,
-                                    rowheight=25,
-                                    fieldbackground=self.cor4)
-        treeview_style.map('Treeview',
-                                background=[('selected', self.cor9)])
         seleciona()
     def cad_livro(self):
+        
         cor1 = '#B5B3A7'
         cad_tela = Tk()
-        cad_tela.title(f'Aluno (a):  {(self.e_n.get())}')
+        cad_tela.title('Cadastro de Livros')
         cad_tela.geometry('700x470')
         cad_tela.attributes('-topmost', True)
         cad_tela.overrideredirect(False)
@@ -724,35 +715,30 @@ class Funcs(pdf,bd):
         ################# Criação das Labels #################
 
         # Label do titulo
-        tit = Label(frame_cad, text='Dados de cadastro do aluno',
+        tit = Label(frame_cad, text='Dados de cadastro de Livros',
                         bg=cor1, fg=self.cor3,
                                 font=('Verdana', 14, 'bold'))
         tit.pack(padx=0,pady=0)
         # Label de Nome
-        nome = Label(frame_cad, text='Nome do Aluno', anchor=W,
+        nome = Label(frame_cad, text='Nome do Livro', anchor=W,
                         bg=cor1, fg=self.cor3,
                         font=('Verdana', 9, 'bold'))
         nome.place(relx=0.02, rely=0.128, relheight=0.08, relwidth=1)
         # Label de Serie
-        ano = Label(frame_cad, text='Ano do aluno', anchor=W,
+        ano = Label(frame_cad, text='Ano de Lançamento do Livro', anchor=W,
                         bg=cor1, fg=self.cor3,
                         font=('Verdana', 9, 'bold'))
         ano.place(relx=0.02, rely=0.256, relheight=0.08, relwidth=1)
-        # Label de Telefone
-        tel = Label(frame_cad, text='Telefone de contato', anchor=W,
+        # Label de Autor
+        aut = Label(frame_cad, text='Autor do Livro', anchor=W,
                         bg=cor1, fg=self.cor3,
                         font=('Verdana', 9, 'bold'))
-        tel.place(relx=0.02, rely=0.384, relheight=0.08, relwidth=1)
-        # Label de Identificação
-        ra = Label(frame_cad, text='RA do Aluno', anchor=W,
+        aut.place(relx=0.02, rely=0.384, relheight=0.08, relwidth=1)
+        # Label de Genero
+        gen = Label(frame_cad, text='Genero do Livro', anchor=W,
                         bg=cor1, fg=self.cor3,
                         font=('Verdana', 9, 'bold'))
-        ra.place(relx=0.02, rely=0.512, relheight=0.08, relwidth=1)
-        # Label de E-mail
-        mail = Label(frame_cad, text='E-mail de contato', anchor=W,
-                        bg=cor1, fg=self.cor3,
-                        font=('Verdana', 9, 'bold'))
-        mail.place(relx=0.02, rely=0.64, relheight=0.08, relwidth=1)
+        gen.place(relx=0.02, rely=0.512, relheight=0.08, relwidth=1)
 
         ################# Criação das Entrys #################
 
@@ -767,24 +753,18 @@ class Funcs(pdf,bd):
                                     highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
         entry_ano.place(relx=0.02, rely=0.326, relheight=0.06, relwidth=0.3)
         # Entry do Telefone do Aluno selecionado
-        entry_fone = Entry(frame_cad,
+        entry_autor = Entry(frame_cad,
                                     bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        entry_fone.place(relx=0.02, rely=0.454, relheight=0.06, relwidth=0.3)
+        entry_autor.place(relx=0.02, rely=0.454, relheight=0.06, relwidth=0.3)
         # Entry da Identificação do Aluno selecionado
-        entry_cpf = Entry(frame_cad,
+        entry_genero = Entry(frame_cad,
                                     bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        entry_cpf.place(relx=0.02, rely=0.582, relheight=0.06, relwidth=0.3)
-        # Entry de E-mail do Aluno selecionado
-        entry_email = Entry(frame_cad,
-                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
-                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        entry_email.place(relx=0.02, rely=0.71, relheight=0.06, relwidth=0.3)
+        entry_genero.place(relx=0.02, rely=0.582, relheight=0.06, relwidth=0.3)
 
         ################# Criação dos Comandos #################
 
-        
         def seleciona():
             #Selecionar a Treeview
             cad_bd.delete(*cad_bd.get_children())
@@ -792,13 +772,12 @@ class Funcs(pdf,bd):
             self.conecta_bd_f1()
             # Criar variavel sem o self
             lista_cad = self.cursor.execute(''' 
-                            SELECT cod_1, 
-                                nome, 
-                                serie, 
-                                telefone, 
-                                identificacao, 
-                                email 
-                            FROM identidade ORDER BY nome ASC; 
+                            SELECT cod_2, 
+                                nome_l, 
+                                ano, 
+                                autor, 
+                                genero 
+                            FROM livros ORDER BY nome_l ASC; 
                                     ''')
             # Adicionar na Treeview
             for i in lista_cad:
@@ -808,35 +787,32 @@ class Funcs(pdf,bd):
         def variaveis():
             self.n_get_cad=entry_nome.get()
             self.a_get_cad=entry_ano.get()
-            self.f_get_cad=entry_fone.get()
-            self.c_get_cad=entry_cpf.get()
-            self.e_get_cad=entry_email.get()
+            self.f_get_cad=entry_autor.get()
+            self.c_get_cad=entry_genero.get()
         def clean():
             entry_nome.delete(0, END)
             entry_ano.delete(0, END)
-            entry_fone.delete(0, END)
-            entry_cpf.delete(0, END)
-            entry_email.delete(0, END)
+            entry_autor.delete(0, END)
+            entry_genero.delete(0, END)
         def bt__add():
             variaveis()
-            if entry_nome.get()=='' or entry_ano.get()=='' or entry_fone.get()=='' or entry_cpf.get()=='':
+            if entry_nome.get()=='':
                 messagebox.showinfo(title='ERRO!', message='Insira todos os dados!')
                 return
             self.conecta_bd_f1()
             # Função de colocar no BD
             self.cursor.execute('''
-                    INSERT INTO identidade 
-                        (nome, 
-                        serie, 
-                        telefone, 
-                        identificacao, 
-                        email)
+                    INSERT INTO livros 
+                        (nome_l, 
+                        ano, 
+                        autor, 
+                        genero
+                        )
                     VALUES (?,?,?,?,?)''', 
                         (self.n_get_cad, 
                         self.a_get_cad, 
                         self.f_get_cad, 
-                        self.c_get_cad,
-                        self.e_get_cad
+                        self.c_get_cad
                         ))
             self.conn.commit()
             self.desconecta_bd_f1()
@@ -879,16 +855,15 @@ class Funcs(pdf,bd):
         ################# Criação da Treeview #################
         
         # Criação da Treeview
-        cad_bd = ttk.Treeview(frame_cad, columns=('col1', 'col2', 'col3', 'col4', 'col5', 'col6'))
+        cad_bd = ttk.Treeview(frame_cad, columns=('col1', 'col2', 'col3', 'col4', 'col5'))
         cad_bd.place(relx=0.37, rely=0.198, relheight=0.76, relwidth=0.6)
         # Cabeçalho da Treeview
         cad_bd.heading('#0', text='')
         cad_bd.heading('#1', text='#')
         cad_bd.heading('#2', text='Nome')
         cad_bd.heading('#3', text='Ano')
-        cad_bd.heading('#4', text='Telefone')
-        cad_bd.heading('#5', text='Documento')
-        cad_bd.heading('#6', text='E-mail')
+        cad_bd.heading('#4', text='Autor')
+        cad_bd.heading('#5', text='Genero')
         # Tamanho das colunas
         cad_bd.column('#0', width=1,stretch=0)
         cad_bd.column('#1', width=1,stretch=1)
@@ -896,19 +871,7 @@ class Funcs(pdf,bd):
         cad_bd.column('#3', width=1,stretch=1)
         cad_bd.column('#4', width=1,stretch=1)
         cad_bd.column('#5', width=1,stretch=1)
-        cad_bd.column('#6', width=1,stretch=1)
-        
-        ################# Personalização da Treeview #################
-        
-        treeview_style = ttk.Style()
-        treeview_style.theme_use('default') # clam , default , alt , vista
-        treeview_style.configure('Treeview',
-                                    background=self.cor1,
-                                    foreground=self.cor3,
-                                    rowheight=25,
-                                    fieldbackground=self.cor4)
-        treeview_style.map('Treeview',
-                                background=[('selected', self.cor9)])
+
         seleciona()
     def cad_sem_atribuicao(self):
         print()
