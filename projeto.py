@@ -15,7 +15,7 @@ from reportlab.platypus import SimpleDocTemplate, Image
 
 root = Tk()
 Pmw.initialise(root)
-
+# so pra subir o certo
 
 class bd():
     def variaveis_f1(self):
