@@ -15,7 +15,6 @@ from reportlab.platypus import SimpleDocTemplate, Image
 
 root = Tk()
 Pmw.initialise(root)
-# so pra subir o certo
 
 class bd():
     def variaveis_f1(self):
@@ -691,13 +690,13 @@ class Funcs(pdf,bd):
         cad_bd.heading('#5', text='Documento')
         cad_bd.heading('#6', text='E-mail')
         # Tamanho das colunas
-        cad_bd.column('#0', width=1,stretch=0)
+        cad_bd.column('#0', width=0,stretch=0)
         cad_bd.column('#1', width=1,stretch=1)
-        cad_bd.column('#2', width=1,stretch=1)
-        cad_bd.column('#3', width=1,stretch=1)
-        cad_bd.column('#4', width=1,stretch=1)
-        cad_bd.column('#5', width=1,stretch=1)
-        cad_bd.column('#6', width=1,stretch=1)
+        cad_bd.column('#2', width=75,stretch=1)
+        cad_bd.column('#3', width=20,stretch=1)
+        cad_bd.column('#4', width=85,stretch=1)
+        cad_bd.column('#5', width=70,stretch=1)
+        cad_bd.column('#6', width=90,stretch=1)
         
         seleciona()
     def cad_livro(self):
@@ -808,7 +807,7 @@ class Funcs(pdf,bd):
                         autor, 
                         genero
                         )
-                    VALUES (?,?,?,?,?)''', 
+                    VALUES (?,?,?,?)''', 
                         (self.n_get_cad, 
                         self.a_get_cad, 
                         self.f_get_cad, 
@@ -865,15 +864,15 @@ class Funcs(pdf,bd):
         cad_bd.heading('#4', text='Autor')
         cad_bd.heading('#5', text='Genero')
         # Tamanho das colunas
-        cad_bd.column('#0', width=1,stretch=0)
+        cad_bd.column('#0', width=0,stretch=0)
         cad_bd.column('#1', width=1,stretch=1)
-        cad_bd.column('#2', width=1,stretch=1)
-        cad_bd.column('#3', width=1,stretch=1)
-        cad_bd.column('#4', width=1,stretch=1)
-        cad_bd.column('#5', width=1,stretch=1)
+        cad_bd.column('#2', width=100,stretch=1)
+        cad_bd.column('#3', width=25,stretch=1)
+        cad_bd.column('#4', width=95,stretch=1)
+        cad_bd.column('#5', width=75,stretch=1)
 
         seleciona()
-    def cad_sem_atribuicao(self):
+    def cad_escolas(self):
         print()
 
 class Application(Funcs,pdf,bd):
@@ -1107,7 +1106,20 @@ class Application(Funcs,pdf,bd):
         self.cad_bt_.place(relx=0.75, rely=0.7, relheight=0.3, relwidth=0.25)
         # Text
         # Text Aluno
+        label_aluno1 = Label(self.frame_cad1, text='Nome do Aluno, Ano escolar, Telefone,', bg=self.cor1, fg=self.cor5,
+                                font=('Verdana', 12))
+        label_aluno2 = Label(self.frame_cad1, text='Identificação, E-mail', bg=self.cor1, fg=self.cor5,
+                                font=('Verdana', 12))
+        label_aluno1.place(relx=0.1, rely=0.3)
+        label_aluno2.place(relx=0.08, rely=0.6)
         # Text Livro
+        label_livro1 = Label(self.frame_cad2, text='Nome do Livro, Ano de Lançamento,', bg=self.cor1, fg=self.cor5,
+                                font=('Verdana', 12))
+        label_livro2 = Label(self.frame_cad2, text='Nome do Autor, Genero do Livro', bg=self.cor1, fg=self.cor5,
+                                font=('Verdana', 12))
+        label_livro1.place(relx=0.09, rely=0.3)
+        label_livro2.place(relx=0.06, rely=0.6)
+        
         # Text sem atribuição
     def botoes(self):
         
@@ -1332,6 +1344,9 @@ class Application(Funcs,pdf,bd):
         msg_m_senha_login = 'Selecione para tornar sua senha visivel'
         msg_b_entrar = 'Entrar com suas credenciais'
         msg_b_cancel = 'Cancelar entrada e sair do aplicativo'
+        ########_________Tela de Cadastro_________########
+        msg_add_aluno = 'Clique para adicionar um aluno'
+        msg_add_livro = 'Clique para adicionar um Livro'
         ###############################################
         ########________Tela de Inicio_________########
         ###############################################
@@ -1394,5 +1409,11 @@ class Application(Funcs,pdf,bd):
         # msg Button Cancelar Frame login
         self.msg_b_cancel = Pmw.Balloon(self.frame_tela0)
         self.msg_b_cancel.bind(self.l_bt_can, msg_b_cancel)
+        # msg Button Adicionar Aluno Frame Cadastro
+        self.msg_add_aluno = Pmw.Balloon(self.frame_cad1)
+        self.msg_add_aluno.bind(self.cad_bt_aluno, msg_add_aluno)
+        # msg Button Adicionar Livro Frame Cadastro
+        self.msg_add_livro = Pmw.Balloon(self.frame_cad2)
+        self.msg_add_livro.bind(self.cad_bt_livro, msg_add_livro)
 
 Application()
