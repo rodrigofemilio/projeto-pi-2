@@ -60,7 +60,9 @@ class bd():
                 serie CHAR(10),
                 telefone CHAR(20),
                 identificacao CHAR(20),
-                email CHAR(40)
+                email CHAR(40),
+                mae CHAR(40),
+                pai CHAR(40)
             );
         ''')
         self.conn.commit(); print('Banco de Dados 2 criado (Alunos)')
@@ -71,7 +73,8 @@ class bd():
                 nome_l CHAR(40),
                 ano CHAR(10),
                 autor CHAR(20),
-                genero CHAR(20)
+                genero CHAR(20),
+                numero CHAR(6)
             );
         ''')
         self.conn.commit(); print('Banco de Dados 3 criado (Livros)')
@@ -510,21 +513,21 @@ class Funcs(pdf,bd):
             self.f1_drop_serie.config(bg=self.cor11, bd=0, highlightbackground=self.cor9,  relief=FLAT,
                                 fg=self.cor7, font=('Verdana', 11), indicatoron='0', cursor='exchange', direction='flush')
     def cad_aluno(self):
-        
         cor1 = '#B5B3A7'
         cad_tela = Tk()
         cad_tela.title('Cadastro de Alunos')
         cad_tela.geometry('700x470')
         cad_tela.attributes('-topmost', True)
         cad_tela.overrideredirect(False)
+        Pmw.initialise(cad_tela)
         frame_cad = Frame(cad_tela, bd=0, bg=cor1,
-                            highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
+                            highlightbackground=cor1, highlightthickness=0.5, highlightcolor=cor1)
         frame_cad.place(relx=0, rely=0, relwidth=1, relheight=1)
 
         ################# Criação das Labels #################
 
         # Label do titulo
-        tit = Label(frame_cad, text='Dados de cadastro do aluno',
+        tit = Label(frame_cad, text='Dados de cadastro de alunos',
                         bg=cor1, fg=self.cor3,
                                 font=('Verdana', 14, 'bold'))
         tit.pack(padx=0,pady=0)
@@ -532,59 +535,80 @@ class Funcs(pdf,bd):
         nome = Label(frame_cad, text='Nome do Aluno', anchor=W,
                         bg=cor1, fg=self.cor3,
                         font=('Verdana', 9, 'bold'))
-        nome.place(relx=0.02, rely=0.128, relheight=0.08, relwidth=1)
+        nome.place(relx=0.02, rely=0.09, relheight=0.08, relwidth=1)
         # Label de Serie
         ano = Label(frame_cad, text='Ano do aluno', anchor=W,
                         bg=cor1, fg=self.cor3,
                         font=('Verdana', 9, 'bold'))
-        ano.place(relx=0.02, rely=0.256, relheight=0.08, relwidth=1)
+        ano.place(relx=0.02, rely=0.21, relheight=0.08, relwidth=1)
         # Label de Telefone
         tel = Label(frame_cad, text='Telefone de contato', anchor=W,
                         bg=cor1, fg=self.cor3,
                         font=('Verdana', 9, 'bold'))
-        tel.place(relx=0.02, rely=0.384, relheight=0.08, relwidth=1)
+        tel.place(relx=0.02, rely=0.33, relheight=0.08, relwidth=1)
         # Label de Identificação
-        ra = Label(frame_cad, text='RA do Aluno', anchor=W,
+        ra = Label(frame_cad, text='Identificação do Aluno', anchor=W,
                         bg=cor1, fg=self.cor3,
                         font=('Verdana', 9, 'bold'))
-        ra.place(relx=0.02, rely=0.512, relheight=0.08, relwidth=1)
+        ra.place(relx=0.02, rely=0.45, relheight=0.08, relwidth=1)
         # Label de E-mail
         mail = Label(frame_cad, text='E-mail de contato', anchor=W,
                         bg=cor1, fg=self.cor3,
                         font=('Verdana', 9, 'bold'))
-        mail.place(relx=0.02, rely=0.64, relheight=0.08, relwidth=1)
+        mail.place(relx=0.02, rely=0.57, relheight=0.08, relwidth=1)
+        # Label de Mãe
+        mae = Label(frame_cad, text='Nome da Mãe ou Responsável', anchor=W,
+                        bg=cor1, fg=self.cor3,
+                        font=('Verdana', 9, 'bold'))
+        mae.place(relx=0.02, rely=0.69, relheight=0.08, relwidth=1)
+        # Label de Pai
+        pai = Label(frame_cad, text='Nome do Pai ou Responsável', anchor=W,
+                        bg=cor1, fg=self.cor3,
+                        font=('Verdana', 9, 'bold'))
+        pai.place(relx=0.02, rely=0.81, relheight=0.08, relwidth=1)
 
         ################# Criação das Entrys #################
 
+        # Entry do Codigo do Aluno
+        entry_cod = Entry(frame_cad)
         # Entry do Nome do Aluno selecionado
         entry_nome = Entry(frame_cad,
                                     bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        entry_nome.place(relx=0.02, rely=0.198, relheight=0.06, relwidth=0.3)
+        entry_nome.place(relx=0.02, rely=0.16, relheight=0.06, relwidth=0.3)
         # Entry do Ano do Aluno selecionado
         entry_ano = Entry(frame_cad,
                                     bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        entry_ano.place(relx=0.02, rely=0.326, relheight=0.06, relwidth=0.3)
+        entry_ano.place(relx=0.02, rely=0.28, relheight=0.06, relwidth=0.3)
         # Entry do Telefone do Aluno selecionado
         entry_fone = Entry(frame_cad,
                                     bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        entry_fone.place(relx=0.02, rely=0.454, relheight=0.06, relwidth=0.3)
+        entry_fone.place(relx=0.02, rely=0.4, relheight=0.06, relwidth=0.3)
         # Entry da Identificação do Aluno selecionado
         entry_cpf = Entry(frame_cad,
                                     bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        entry_cpf.place(relx=0.02, rely=0.582, relheight=0.06, relwidth=0.3)
+        entry_cpf.place(relx=0.02, rely=0.52, relheight=0.06, relwidth=0.3)
         # Entry de E-mail do Aluno selecionado
         entry_email = Entry(frame_cad,
                                     bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
                                     highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        entry_email.place(relx=0.02, rely=0.71, relheight=0.06, relwidth=0.3)
+        entry_email.place(relx=0.02, rely=0.64, relheight=0.06, relwidth=0.3)
+        # Entry de E-mail do Aluno selecionado
+        entry_mae = Entry(frame_cad,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
+        entry_mae.place(relx=0.02, rely=0.76, relheight=0.06, relwidth=0.3)
+        # Entry de E-mail do Aluno selecionado
+        entry_pai = Entry(frame_cad,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
+        entry_pai.place(relx=0.02, rely=0.88, relheight=0.06, relwidth=0.3)
 
         ################# Criação dos Comandos #################
 
-        
         def seleciona():
             #Selecionar a Treeview
             cad_bd.delete(*cad_bd.get_children())
@@ -597,7 +621,9 @@ class Funcs(pdf,bd):
                                 serie, 
                                 telefone, 
                                 identificacao, 
-                                email 
+                                email,
+                                mae,
+                                pai
                             FROM identidade ORDER BY nome ASC; 
                                     ''')
             # Adicionar na Treeview
@@ -606,17 +632,23 @@ class Funcs(pdf,bd):
             # Desconectar o BD
             self.desconecta_bd_f1()
         def variaveis():
+            self.cod_get=entry_cod.get()
             self.n_get_cad=entry_nome.get()
             self.a_get_cad=entry_ano.get()
             self.f_get_cad=entry_fone.get()
             self.c_get_cad=entry_cpf.get()
             self.e_get_cad=entry_email.get()
+            self.mae_get_cad=entry_mae.get()
+            self.pai_get_cad=entry_pai.get()
         def clean():
+            entry_cod.delete(0, END)
             entry_nome.delete(0, END)
             entry_ano.delete(0, END)
             entry_fone.delete(0, END)
             entry_cpf.delete(0, END)
             entry_email.delete(0, END)
+            entry_mae.delete(0, END)
+            entry_pai.delete(0, END)
         def bt__add():
             variaveis()
             if entry_nome.get()=='' or entry_ano.get()=='' or entry_fone.get()=='' or entry_cpf.get()=='':
@@ -630,25 +662,504 @@ class Funcs(pdf,bd):
                         serie, 
                         telefone, 
                         identificacao, 
-                        email)
-                    VALUES (?,?,?,?,?)''', 
+                        email,
+                        mae,
+                        pai)
+                    VALUES (?,?,?,?,?,?,?)''', 
                         (self.n_get_cad, 
                         self.a_get_cad, 
                         self.f_get_cad, 
                         self.c_get_cad,
-                        self.e_get_cad
+                        self.e_get_cad,
+                        self.mae_get_cad,
+                        self.pai_get_cad
                         ))
             self.conn.commit()
             self.desconecta_bd_f1()
             seleciona()
             clean()
         def bt__del():
-            
+            # Chamar Variaveis
+            variaveis()
+            # Conectar o BD
+            self.conecta_bd_f1()
+            # Função de deletar do BD
+            try:
+                self.cursor.execute('''DELETE FROM identidade WHERE cod_1 = {} '''.format(self.cod_get))
+                self.conn.commit()
+            except:
+                messagebox.showinfo(title='ERRO!',message='Selecione com 2 cliques para ser apagado!')
+            # Desconectar o BD
+            self.desconecta_bd_f1()
+            # Limpar as Entrys
             clean()
+            # Atualizar a lista
+            seleciona()
+            # VOltar Bt de ADD
+            # Button de Adicionar informações no BD
+            bt_add = Button(frame_cad, command=bt__add,
+                        bg=self.cor9, bd=0, activebackground=self.cor11,
+                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                        text='Cadastrar', font=('Verdana', 10), cursor='hand2')
+            bt_add.place(relx=0.37, rely=0.88, relheight=0.06, relwidth=0.14)
         def bt__alt():
-            
+            # Variaveis
+            variaveis()
+            # Conectar ao BD
+            self.conecta_bd_f1()
+            # Código de alterar os dados
+            self.cursor.execute('''
+                        UPDATE identidade 
+                            SET nome = ?, 
+                            serie = ?, 
+                            telefone = ?, 
+                            identificacao = ?, 
+                            email = ?,
+                            mae = ?,
+                            pai = ? 
+                        WHERE cod_1 = ? 
+                        ''', 
+                        (self.n_get_cad, 
+                        self.a_get_cad, 
+                        self.f_get_cad, 
+                        self.c_get_cad,
+                        self.e_get_cad,
+                        self.mae_get_cad,
+                        self.pai_get_cad,
+                        self.cod_get))
+            self.conn.commit()
+            # Desconectar o BD
+            self.desconecta_bd_f1()
+            # Atualizar a Tabela
+            seleciona()
+            # Limpar as Entrys
             clean()
+            # Voltar BT de Add
+            # Button de Adicionar informações no BD
+            bt_add = Button(frame_cad, command=bt__add,
+                        bg=self.cor9, bd=0, activebackground=self.cor11,
+                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                        text='Cadastrar', font=('Verdana', 10), cursor='hand2')
+            bt_add.place(relx=0.37, rely=0.88, relheight=0.06, relwidth=0.14)
+        def db_click(*args):
+            # Funções de inicio
+            clean()
+            #entry
+            variaveis()
+            # Selecionar lista
+            cad_bd.selection()
+            # Função de duplo clique
+            for n in cad_bd.selection():
+                col1, col2, col3, col4, col5, col6, col7, col8 = cad_bd.item(n, 'values')
+                entry_cod.insert(END, col1)
+                entry_nome.insert(END, col2)
+                entry_ano.insert(END, col3)
+                entry_fone.insert(END, col4)
+                entry_cpf.insert(END, col5)
+                entry_email.insert(END, col6)
+                entry_mae.insert(END, col7)
+                entry_pai.insert(END, col8)
+                # Criação do Botão de Informações
+                bt_inf = Button(frame_cad, command=bt__inf,
+                        bg=self.cor9, bd=0, activebackground=self.cor11,
+                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                        text='Informações', font=('Verdana', 10), cursor='hand2')
+                bt_inf.place(relx=0.37, rely=0.88, relheight=0.06, relwidth=0.14)
+        def bt__inf():
+            # Criação da tela de relatório
+            consul_t2 = Tk()
+            consul_t2.title('Informações do aluno')
+            consul_t2.attributes('-topmost', True)
+            consul_t2.geometry('550x500')
+            frame = Frame(consul_t2, bd=4, bg=self.cor1,
+                            highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
+            frame.place(relx=0, rely=0, relwidth=1, relheight=1)
+            # Criação das Labels                # Label do titulo
+            inf = Label(frame, text='Dados da coleta',
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 14, 'bold'))
+            inf.pack(padx=0,pady=0)
+            # Label de Codigo
+            c = Label(frame, text=f'Código de coleta:   {(entry_cod.get())}', anchor=W,
+                        bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'))
+            c.pack()
+            # Label de Nome
+            n = Label(frame, text=f'Nome do aluno:   {(entry_nome.get())}', anchor=W,
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 10, 'bold'))
+            n.pack()
+            # Label de Serie
+            s = Label(frame, text=f'Ano do aluno:   {(entry_ano.get())}', anchor=W,
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 10, 'bold'))
+            s.pack()
+            # Label de Livro
+            f = Label(frame, text=f'Telefone de contato:   {(entry_fone.get())}', anchor=W,
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 10, 'bold'))
+            f.pack()
+            # Label de Data de Retirada
+            cp = Label(frame, text=f'Documento do Aluno:   {(entry_cpf.get())}', anchor=W,
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 10, 'bold'))
+            cp.pack()
+            # Label de Data Entrega
+            em = Label(frame, text=f'E-mail de contato:   {(entry_email.get())}', anchor=W,
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 10, 'bold'))
+            em.pack()
+            # Label de Data Entrega
+            nm = Label(frame, text=f'Nome da Mãe:   {(entry_mae.get())}', anchor=W,
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 10, 'bold'))
+            nm.pack()
+            # Label de Data Entrega
+            np = Label(frame, text=f'Nome do Pai:   {(entry_pai.get())}', anchor=W,
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 10, 'bold'))
+            np.pack()
+            # Destruir Bt de Inf
+            bt_add = Button(frame_cad, command=bt__add,
+                        bg=self.cor9, bd=0, activebackground=self.cor11,
+                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                        text='Cadastrar', font=('Verdana', 10), cursor='hand2')
+            bt_add.place(relx=0.37, rely=0.88, relheight=0.06, relwidth=0.14)
 
+        ################# Criação dos Button #################
+
+        # Button de Adicionar informações no BD
+        bt_add = Button(frame_cad, command=bt__add,
+                        bg=self.cor9, bd=0, activebackground=self.cor11,
+                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                        text='Cadastrar', font=('Verdana', 10), cursor='hand2')
+        bt_add.place(relx=0.37, rely=0.88, relheight=0.06, relwidth=0.14)
+        # Button de Limpar informações nas Entrys
+        bt_cle = Button(frame_cad, command=clean,
+                        bg=self.cor6, bd=0, activebackground=self.cor11,
+                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                        text='Limpar', font=('Verdana', 10), cursor='hand2')
+        bt_cle.place(relx=0.524, rely=0.88, relheight=0.06, relwidth=0.14)
+        # Button de Alterar informações no BD
+        bt_alt = Button(frame_cad, command=bt__alt,
+                        bg=self.cor6, bd=0, activebackground=self.cor11,
+                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                        text='Alterar', font=('Verdana', 10), cursor='hand2')
+        bt_alt.place(relx=0.676, rely=0.88, relheight=0.06, relwidth=0.14)
+        # Button de Deletar informações no BD
+        bt_del = Button(frame_cad, command=bt__del,
+                        bg=self.cor8, bd=0, activebackground=self.cor11,
+                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                        text='Excluir', font=('Verdana', 10), cursor='hand2')
+        bt_del.place(relx=0.83, rely=0.88, relheight=0.06, relwidth=0.14)
+        
+        ################# Criação da Treeview #################
+        
+        # Criação da Treeview
+        cad_bd = ttk.Treeview(frame_cad, columns=('col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7', 'col8'))
+        cad_bd.place(relx=0.37, rely=0.1, relheight=0.76, relwidth=0.6)
+        # Cabeçalho da Treeview
+        cad_bd.heading('#0', text='')
+        cad_bd.heading('#1', text='#')
+        cad_bd.heading('#2', text='Nome')
+        cad_bd.heading('#3', text='Ano')
+        cad_bd.heading('#4', text='Telefone')
+        cad_bd.heading('#5', text='Documento')
+        cad_bd.heading('#6', text='E-mail')
+        cad_bd.heading('#7', text='Nome da Mãe')
+        cad_bd.heading('#8', text='Nome do Pai')
+        # Tamanho das colunas
+        cad_bd.column('#0', width=0,stretch=0)
+        cad_bd.column('#1', width=1,stretch=1)
+        cad_bd.column('#2', width=75,stretch=1)
+        cad_bd.column('#3', width=20,stretch=1)
+        cad_bd.column('#4', width=85,stretch=1)
+        cad_bd.column('#5', width=70,stretch=1)
+        cad_bd.column('#6', width=90,stretch=1)
+        cad_bd.column('#7', width=0,stretch=0)
+        cad_bd.column('#8', width=0,stretch=0)
+        cad_bd.bind('<Double-1>', db_click)
+        seleciona()
+        # MSG BOX
+        # Variaveis Botões
+        msg_bt_add = 'Adicionar Aluno'
+        msg_bt_cle = 'Limpar as as Entradas de Texto'
+        msg_bt_alt = 'Alterar dados do Aluno'
+        msg_bt_del = 'Excluir Aluno'
+        # Variaveis Botões
+        msg_et_nome = 'Digite o nome do Aluno a ser cadastrado'
+        msg_et_ano = 'Selecione o Ano do aluno'
+        msg_et_telefone = 'Digite o Telefone de Contato'
+        msg_et_doc = 'Digite uma documentação do Aluno'
+        msg_et_email = 'Digite um E-mail de contato'
+        msg_et_mae = 'Nome da Mãe ou Responsavel pelo aluno'
+        msg_et_pai = 'Nome do Pai ou Responsavel pelo aluno'
+
+        # msg Button Adicionar
+        box_add = Pmw.Balloon(frame_cad)
+        box_add.bind(bt_add, msg_bt_add)
+        # msg Button Limpar
+        box_cle = Pmw.Balloon(frame_cad)
+        box_cle.bind(bt_cle, msg_bt_cle)
+        # msg Button Alterar
+        box_alt = Pmw.Balloon(frame_cad)
+        box_alt.bind(bt_alt, msg_bt_alt)
+        # msg Button Excluir
+        box_del = Pmw.Balloon(frame_cad)
+        box_del.bind(bt_del, msg_bt_del)
+    def cad_livro(self):
+        cor1 = '#B5B3A7'
+        cad_tela = Tk()
+        cad_tela.title('Cadastro de Livros')
+        cad_tela.geometry('700x470')
+        cad_tela.attributes('-topmost', True)
+        cad_tela.overrideredirect(False)
+        frame_cad = Frame(cad_tela, bd=0, bg=cor1,
+                            highlightbackground=cor1, highlightthickness=0.5, highlightcolor=cor1)
+        frame_cad.place(relx=0, rely=0, relwidth=1, relheight=1)
+
+        ################# Criação das Labels #################
+
+        # Label do titulo
+        tit = Label(frame_cad, text='Dados de cadastro de Livros',
+                        bg=cor1, fg=self.cor3,
+                                font=('Verdana', 14, 'bold'))
+        tit.pack(padx=0,pady=0)
+        # Label de Nome
+        nome = Label(frame_cad, text='Nome do Livro', anchor=W,
+                        bg=cor1, fg=self.cor3,
+                        font=('Verdana', 9, 'bold'))
+        nome.place(relx=0.02, rely=0.128, relheight=0.08, relwidth=1)
+        # Label de Serie
+        ano = Label(frame_cad, text='Ano de Lançamento do Livro', anchor=W,
+                        bg=cor1, fg=self.cor3,
+                        font=('Verdana', 9, 'bold'))
+        ano.place(relx=0.02, rely=0.256, relheight=0.08, relwidth=1)
+        # Label de Autor
+        aut = Label(frame_cad, text='Autor do Livro', anchor=W,
+                        bg=cor1, fg=self.cor3,
+                        font=('Verdana', 9, 'bold'))
+        aut.place(relx=0.02, rely=0.384, relheight=0.08, relwidth=1)
+        # Label de Genero
+        gen = Label(frame_cad, text='Genero do Livro', anchor=W,
+                        bg=cor1, fg=self.cor3,
+                        font=('Verdana', 9, 'bold'))
+        gen.place(relx=0.02, rely=0.512, relheight=0.08, relwidth=1)
+        # Label de Páginas do Livro
+        gen = Label(frame_cad, text='N° de páginas do Livro', anchor=W,
+                        bg=cor1, fg=self.cor3,
+                        font=('Verdana', 9, 'bold'))
+        gen.place(relx=0.02, rely=0.64, relheight=0.08, relwidth=1)
+
+        ################# Criação das Entrys #################
+
+        entry_cod = Entry(frame_cad)
+        # Entry do Nome do Livro
+        entry_nome = Entry(frame_cad,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
+        entry_nome.place(relx=0.02, rely=0.198, relheight=0.06, relwidth=0.3)
+        # Entry do Ano do Livro
+        entry_ano = Entry(frame_cad,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
+        entry_ano.place(relx=0.02, rely=0.326, relheight=0.06, relwidth=0.3)
+        # Entry do Autor do Livro
+        entry_autor = Entry(frame_cad,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
+        entry_autor.place(relx=0.02, rely=0.454, relheight=0.06, relwidth=0.3)
+        # Entry do Genero do Livro
+        entry_genero = Entry(frame_cad,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
+        entry_genero.place(relx=0.02, rely=0.582, relheight=0.06, relwidth=0.3)
+        # Entry do Número de páginas do livro
+        entry_numero = Entry(frame_cad,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
+        entry_numero.place(relx=0.02, rely=0.71, relheight=0.06, relwidth=0.3)
+
+        ################# Criação dos Comandos #################
+
+        def seleciona():
+            #Selecionar a Treeview
+            cad_bd.delete(*cad_bd.get_children())
+            # Conectar o BD
+            self.conecta_bd_f1()
+            # Criar variavel sem o self
+            lista_cad = self.cursor.execute(''' 
+                            SELECT cod_2, 
+                                nome_l, 
+                                ano, 
+                                autor, 
+                                genero,
+                                numero 
+                            FROM livros ORDER BY nome_l ASC; 
+                                    ''')
+            # Adicionar na Treeview
+            for i in lista_cad:
+                cad_bd.insert("", END, values=i)
+            # Desconectar o BD
+            self.desconecta_bd_f1()
+        def variaveis():
+            self.cod_get_l=entry_cod.get()
+            self.n_get_cad_l=entry_nome.get()
+            self.a_get_cad_l=entry_ano.get()
+            self.at_get_cad_l=entry_autor.get()
+            self.g_get_cad_l=entry_genero.get()
+            self.p_get_cad_l=entry_numero.get()
+        def clean():
+            entry_nome.delete(0, END)
+            entry_ano.delete(0, END)
+            entry_autor.delete(0, END)
+            entry_genero.delete(0, END)
+            entry_numero.delete(0, END)
+        def bt__add():
+            variaveis()
+            if entry_nome.get()=='':
+                messagebox.showinfo(title='ERRO!', message='Insira todos os dados!')
+                return
+            self.conecta_bd_f1()
+            # Função de colocar no BD
+            self.cursor.execute('''
+                    INSERT INTO livros 
+                        (nome_l, 
+                        ano, 
+                        autor, 
+                        genero,
+                        numero
+                        )
+                    VALUES (?,?,?,?,?)''', 
+                        (self.n_get_cad_l, 
+                        self.a_get_cad_l, 
+                        self.at_get_cad_l, 
+                        self.g_get_cad_l,
+                        self.p_get_cad_l
+                        ))
+            self.conn.commit()
+            self.desconecta_bd_f1()
+            seleciona()
+            clean()
+        def bt__del():
+            # Chamar Variaveis
+            variaveis()
+            # Conectar o BD
+            self.conecta_bd_f1()
+            # Função de deletar do BD
+            try:
+                self.cursor.execute('''DELETE FROM livros WHERE cod_2 = {} '''.format(self.cod_get_l))
+                self.conn.commit()
+            except:
+                messagebox.showinfo(title='ERRO!',message='Selecione com 2 cliques para ser apagado!')
+            # Desconectar o BD
+            self.desconecta_bd_f1()
+            # Limpar as Entrys
+            clean()
+            # Atualizar a lista
+            seleciona()
+        def bt__alt():
+            # Variaveis
+            variaveis()
+            # Conectar ao BD
+            self.conecta_bd_f1()
+            # Código de alterar os dados
+            self.cursor.execute('''
+                        UPDATE livros
+                            SET nome_l = ?, 
+                            ano = ?, 
+                            autor = ?, 
+                            genero = ?, 
+                            numero = ?
+                        WHERE cod_2 = ? 
+                        ''', 
+                        (self.n_get_cad_l, 
+                        self.a_get_cad_l, 
+                        self.at_get_cad_l, 
+                        self.g_get_cad_l,
+                        self.p_get_cad_l,
+                        self.cod_get_l))
+            self.conn.commit()
+            # Desconectar o BD
+            self.desconecta_bd_f1()
+            # Atualizar a Tabela
+            seleciona()
+            # Limpar as Entrys
+            clean()
+        def db_click(*args):
+            # Funções de inicio
+            clean()
+            #entry
+            variaveis()
+            # Selecionar lista
+            cad_bd.selection()
+            # Função de duplo clique
+            for n in cad_bd.selection():
+                col1, col2, col3, col4, col5, col6 = cad_bd.item(n, 'values')
+                entry_cod.insert(END, col1)
+                entry_nome.insert(END, col2)
+                entry_ano.insert(END, col3)
+                entry_autor.insert(END, col4)
+                entry_genero.insert(END, col5)
+                entry_numero.insert(END, col6)
+
+                # Criação do Botão de Informações
+                bt_inf = Button(frame_cad, command=bt__inf,
+                        bg=self.cor9, bd=0, activebackground=self.cor11,
+                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                        text='Informações', font=('Verdana', 10), cursor='hand2')
+                bt_inf.place(relx=0.37, rely=0.88, relheight=0.06, relwidth=0.14)
+        def bt__inf():
+            # Criação da tela de relatório
+            consul_t2 = Tk()
+            consul_t2.title('Informações do livro')
+            consul_t2.attributes('-topmost', True)
+            consul_t2.geometry('550x500')
+            frame = Frame(consul_t2, bd=4, bg=self.cor1,
+                            highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
+            frame.place(relx=0, rely=0, relwidth=1, relheight=1)
+            # Criação das Labels                # Label do titulo
+            inf = Label(frame, text='Dados da coleta',
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 14, 'bold'))
+            inf.pack(padx=0,pady=0)
+            # Label de Codigo
+            c = Label(frame, text=f'Código de coleta:   {(entry_cod.get())}', anchor=W,
+                        bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 10, 'bold'))
+            c.pack()
+            # Label de Nome
+            n = Label(frame, text=f'Nome do Livro:   {(entry_nome.get())}', anchor=W,
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 10, 'bold'))
+            n.pack()
+            # Label de Serie
+            s = Label(frame, text=f'Ano de Lançamento:   {(entry_ano.get())}', anchor=W,
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 10, 'bold'))
+            s.pack()
+            # Label de Livro
+            f = Label(frame, text=f'Nome do Autor do Livro:   {(entry_autor.get())}', anchor=W,
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 10, 'bold'))
+            f.pack()
+            # Label de Data de Retirada
+            cp = Label(frame, text=f'Genero do Livro:   {(entry_genero.get())}', anchor=W,
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 10, 'bold'))
+            cp.pack()
+            # Label de Data Entrega
+            em = Label(frame, text=f'Número de Página do Livro:   {(entry_numero.get())}', anchor=W,
+                                bg=self.cor1, fg=self.cor3,
+                                        font=('Verdana', 10, 'bold'))
+            em.pack()
+            # Destruir Bt de Inf
+            bt_add = Button(frame_cad, command=bt__add,
+                        bg=self.cor9, bd=0, activebackground=self.cor11,
+                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                        text='Cadastrar', font=('Verdana', 10), cursor='hand2')
+            bt_add.place(relx=0.37, rely=0.88, relheight=0.06, relwidth=0.14)
+        
         ################# Criação dos Button #################
 
         # Button de Adicionar informações no BD
@@ -686,183 +1197,9 @@ class Funcs(pdf,bd):
         cad_bd.heading('#1', text='#')
         cad_bd.heading('#2', text='Nome')
         cad_bd.heading('#3', text='Ano')
-        cad_bd.heading('#4', text='Telefone')
-        cad_bd.heading('#5', text='Documento')
-        cad_bd.heading('#6', text='E-mail')
-        # Tamanho das colunas
-        cad_bd.column('#0', width=0,stretch=0)
-        cad_bd.column('#1', width=1,stretch=1)
-        cad_bd.column('#2', width=75,stretch=1)
-        cad_bd.column('#3', width=20,stretch=1)
-        cad_bd.column('#4', width=85,stretch=1)
-        cad_bd.column('#5', width=70,stretch=1)
-        cad_bd.column('#6', width=90,stretch=1)
-        
-        seleciona()
-    def cad_livro(self):
-        
-        cor1 = '#B5B3A7'
-        cad_tela = Tk()
-        cad_tela.title('Cadastro de Livros')
-        cad_tela.geometry('700x470')
-        cad_tela.attributes('-topmost', True)
-        cad_tela.overrideredirect(False)
-        frame_cad = Frame(cad_tela, bd=0, bg=cor1,
-                            highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
-        frame_cad.place(relx=0, rely=0, relwidth=1, relheight=1)
-
-        ################# Criação das Labels #################
-
-        # Label do titulo
-        tit = Label(frame_cad, text='Dados de cadastro de Livros',
-                        bg=cor1, fg=self.cor3,
-                                font=('Verdana', 14, 'bold'))
-        tit.pack(padx=0,pady=0)
-        # Label de Nome
-        nome = Label(frame_cad, text='Nome do Livro', anchor=W,
-                        bg=cor1, fg=self.cor3,
-                        font=('Verdana', 9, 'bold'))
-        nome.place(relx=0.02, rely=0.128, relheight=0.08, relwidth=1)
-        # Label de Serie
-        ano = Label(frame_cad, text='Ano de Lançamento do Livro', anchor=W,
-                        bg=cor1, fg=self.cor3,
-                        font=('Verdana', 9, 'bold'))
-        ano.place(relx=0.02, rely=0.256, relheight=0.08, relwidth=1)
-        # Label de Autor
-        aut = Label(frame_cad, text='Autor do Livro', anchor=W,
-                        bg=cor1, fg=self.cor3,
-                        font=('Verdana', 9, 'bold'))
-        aut.place(relx=0.02, rely=0.384, relheight=0.08, relwidth=1)
-        # Label de Genero
-        gen = Label(frame_cad, text='Genero do Livro', anchor=W,
-                        bg=cor1, fg=self.cor3,
-                        font=('Verdana', 9, 'bold'))
-        gen.place(relx=0.02, rely=0.512, relheight=0.08, relwidth=1)
-
-        ################# Criação das Entrys #################
-
-        # Entry do Nome do Aluno selecionado
-        entry_nome = Entry(frame_cad,
-                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
-                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        entry_nome.place(relx=0.02, rely=0.198, relheight=0.06, relwidth=0.3)
-        # Entry do Ano do Aluno selecionado
-        entry_ano = Entry(frame_cad,
-                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
-                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        entry_ano.place(relx=0.02, rely=0.326, relheight=0.06, relwidth=0.3)
-        # Entry do Telefone do Aluno selecionado
-        entry_autor = Entry(frame_cad,
-                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
-                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        entry_autor.place(relx=0.02, rely=0.454, relheight=0.06, relwidth=0.3)
-        # Entry da Identificação do Aluno selecionado
-        entry_genero = Entry(frame_cad,
-                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
-                                    highlightthickness=2, highlightcolor=self.cor10,fg=self.cor2, insertontime='0')
-        entry_genero.place(relx=0.02, rely=0.582, relheight=0.06, relwidth=0.3)
-
-        ################# Criação dos Comandos #################
-
-        def seleciona():
-            #Selecionar a Treeview
-            cad_bd.delete(*cad_bd.get_children())
-            # Conectar o BD
-            self.conecta_bd_f1()
-            # Criar variavel sem o self
-            lista_cad = self.cursor.execute(''' 
-                            SELECT cod_2, 
-                                nome_l, 
-                                ano, 
-                                autor, 
-                                genero 
-                            FROM livros ORDER BY nome_l ASC; 
-                                    ''')
-            # Adicionar na Treeview
-            for i in lista_cad:
-                cad_bd.insert("", END, values=i)
-            # Desconectar o BD
-            self.desconecta_bd_f1()
-        def variaveis():
-            self.n_get_cad=entry_nome.get()
-            self.a_get_cad=entry_ano.get()
-            self.f_get_cad=entry_autor.get()
-            self.c_get_cad=entry_genero.get()
-        def clean():
-            entry_nome.delete(0, END)
-            entry_ano.delete(0, END)
-            entry_autor.delete(0, END)
-            entry_genero.delete(0, END)
-        def bt__add():
-            variaveis()
-            if entry_nome.get()=='':
-                messagebox.showinfo(title='ERRO!', message='Insira todos os dados!')
-                return
-            self.conecta_bd_f1()
-            # Função de colocar no BD
-            self.cursor.execute('''
-                    INSERT INTO livros 
-                        (nome_l, 
-                        ano, 
-                        autor, 
-                        genero
-                        )
-                    VALUES (?,?,?,?)''', 
-                        (self.n_get_cad, 
-                        self.a_get_cad, 
-                        self.f_get_cad, 
-                        self.c_get_cad
-                        ))
-            self.conn.commit()
-            self.desconecta_bd_f1()
-            seleciona()
-            clean()
-        def bt__del():
-            
-            clean()
-        def bt__alt():
-            
-            clean()
-
-        ################# Criação dos Button #################
-
-        # Button de Adicionar informações no BD
-        bt_add = Button(frame_cad, command=bt__add,
-                        bg=self.cor9, bd=0, activebackground=self.cor11,
-                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
-                        text='Cadastrar', font=('Verdana', 10), cursor='hand2')
-        bt_add.place(relx=0.02, rely=0.82, relheight=0.06, relwidth=0.14)
-        # Button de Limpar informações nas Entrys
-        bt_cle = Button(frame_cad, command=clean,
-                        bg=self.cor6, bd=0, activebackground=self.cor11,
-                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
-                        text='Limpar', font=('Verdana', 10), cursor='hand2')
-        bt_cle.place(relx=0.18, rely=0.82, relheight=0.06, relwidth=0.14)
-        # Button de Deletar informações no BD
-        bt_del = Button(frame_cad, command=bt__del,
-                        bg=self.cor8, bd=0, activebackground=self.cor11,
-                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
-                        text='Excluir', font=('Verdana', 10), cursor='hand2')
-        bt_del.place(relx=0.18, rely=0.9, relheight=0.06, relwidth=0.14)
-        # Button de Alterar informações no BD
-        bt_alt = Button(frame_cad, command=bt__alt,
-                        bg=self.cor6, bd=0, activebackground=self.cor11,
-                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
-                        text='Alterar', font=('Verdana', 10), cursor='hand2')
-        bt_alt.place(relx=0.02, rely=0.9, relheight=0.06, relwidth=0.14)
-
-        ################# Criação da Treeview #################
-        
-        # Criação da Treeview
-        cad_bd = ttk.Treeview(frame_cad, columns=('col1', 'col2', 'col3', 'col4', 'col5'))
-        cad_bd.place(relx=0.37, rely=0.198, relheight=0.76, relwidth=0.6)
-        # Cabeçalho da Treeview
-        cad_bd.heading('#0', text='')
-        cad_bd.heading('#1', text='#')
-        cad_bd.heading('#2', text='Nome')
-        cad_bd.heading('#3', text='Ano')
         cad_bd.heading('#4', text='Autor')
         cad_bd.heading('#5', text='Genero')
+        cad_bd.heading('#6', text='N° de páginas')
         # Tamanho das colunas
         cad_bd.column('#0', width=0,stretch=0)
         cad_bd.column('#1', width=1,stretch=1)
@@ -870,7 +1207,8 @@ class Funcs(pdf,bd):
         cad_bd.column('#3', width=25,stretch=1)
         cad_bd.column('#4', width=95,stretch=1)
         cad_bd.column('#5', width=75,stretch=1)
-
+        cad_bd.column('#6', width=0,stretch=0)
+        cad_bd.bind('<Double-1>', db_click)
         seleciona()
     def cad_escolas(self):
         print()
@@ -912,8 +1250,9 @@ class Application(Funcs,pdf,bd):
         # Janela principal do aplicativo
         self.root.title('Biblioteca')
         self.root.geometry('450x400')
-        self.root.resizable(False, False)
-        self.root.minsize(width=360, height=300)
+        #self.root.resizable(False, False)
+        self.root.minsize(width=360, height=310)
+        self.root.maxsize(width=660, height=610)
     def aba_login(self):
         # Label de Login na parte superior
         self.l_label_tit = Label(self.frame_tela0,text='LOGIN',bg=self.cor1,fg=self.cor3,
