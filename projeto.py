@@ -234,9 +234,9 @@ class Funcs(pdf,bd):
         self.entry_data_retirada.delete(0, END)
         self.f1_entry_serie.delete(0, END)
     def limpa_f2(self):
-        self.entry_aluno2.delete(0, END)
-        self.entry_serie2.delete(0, END)
-        self.entry_livro2.delete(0, END)
+        self.f2_entry_aluno.delete(0, END)
+        self.f2_entry_serie.delete(0, END)
+        self.f2_entry_livro.delete(0, END)
     def cadastrar_f1(self):
         # Chamar variaveis
         self.variaveis_f1()
@@ -357,9 +357,9 @@ class Funcs(pdf,bd):
         self.conecta_bd_f1()
         # Limpar a lista
         self.pesq_bd.delete(*self.pesq_bd.get_children())
-        if self.entry_aluno2.get() != '':
-            self.entry_aluno2.insert(END, '%')
-            nome = self.entry_aluno2.get()
+        if self.f2_entry_aluno.get() != '':
+            self.f2_entry_aluno.insert(END, '%')
+            nome = self.f2_entry_aluno.get()
             self.cursor.execute('''  
                             SELECT cod, 
                                 nomes_alunos, 
@@ -376,9 +376,9 @@ class Funcs(pdf,bd):
             self.limpa_f2()
             # Desconecta o BD
             self.desconecta_bd_f1()
-        elif self.entry_serie2.get() != '':
-            self.entry_serie2.insert(END, '%')
-            serie = self.entry_serie2.get()
+        elif self.f2_entry_serie.get() != '':
+            self.f2_entry_serie.insert(END, '%')
+            serie = self.f2_entry_serie.get()
             self.cursor.execute('''  
                             SELECT cod, 
                                 nomes_alunos, 
@@ -395,9 +395,9 @@ class Funcs(pdf,bd):
             self.limpa_f2()
             # Desconecta o BD
             self.desconecta_bd_f1()
-        elif self.entry_livro2.get() != '':
-            self.entry_livro2.insert(END, '%')
-            livro = self.entry_livro2.get()
+        elif self.f2_entry_livro.get() != '':
+            self.f2_entry_livro.insert(END, '%')
+            livro = self.f2_entry_livro.get()
             self.cursor.execute('''  
                             SELECT cod, 
                                 nomes_alunos, 
@@ -567,6 +567,7 @@ class Funcs(pdf,bd):
                         font=('Verdana', 9, 'bold'))
         pai.place(relx=0.02, rely=0.81, relheight=0.08, relwidth=1)
 
+
         ################# Criação das Entrys #################
 
         # Entry do Codigo do Aluno
@@ -640,6 +641,16 @@ class Funcs(pdf,bd):
             self.e_get_cad=entry_email.get()
             self.mae_get_cad=entry_mae.get()
             self.pai_get_cad=entry_pai.get()
+        def variaveis1():
+            entry_ano.insert(END, '° Ano')
+            self.cod_get=entry_cod.get()
+            self.n_get_cad=entry_nome.get()
+            self.a_get_cad=entry_ano.get()
+            self.f_get_cad=entry_fone.get()
+            self.c_get_cad=entry_cpf.get()
+            self.e_get_cad=entry_email.get()
+            self.mae_get_cad=entry_mae.get()
+            self.pai_get_cad=entry_pai.get()
         def clean():
             entry_cod.delete(0, END)
             entry_nome.delete(0, END)
@@ -650,12 +661,14 @@ class Funcs(pdf,bd):
             entry_mae.delete(0, END)
             entry_pai.delete(0, END)
         def bt__add():
-            variaveis()
+            variaveis1()
+            
             if entry_nome.get()=='' or entry_ano.get()=='' or entry_fone.get()=='' or entry_cpf.get()=='':
                 messagebox.showinfo(title='ERRO!', message='Insira todos os dados!')
                 return
             self.conecta_bd_f1()
             # Função de colocar no BD
+            
             self.cursor.execute('''
                     INSERT INTO identidade 
                         (nome, 
@@ -783,48 +796,49 @@ class Funcs(pdf,bd):
             c = Label(frame, text=f'Código de coleta:   {(entry_cod.get())}', anchor=W,
                         bg=self.cor1, fg=self.cor3,
                                 font=('Verdana', 10, 'bold'))
-            c.pack()
+            c.place(relx=0.02, rely=0.1, relheight=0.08, relwidth=1)
             # Label de Nome
             n = Label(frame, text=f'Nome do aluno:   {(entry_nome.get())}', anchor=W,
                                 bg=self.cor1, fg=self.cor3,
                                         font=('Verdana', 10, 'bold'))
-            n.pack()
+            n.place(relx=0.02, rely=0.2, relheight=0.08, relwidth=1)
             # Label de Serie
             s = Label(frame, text=f'Ano do aluno:   {(entry_ano.get())}', anchor=W,
                                 bg=self.cor1, fg=self.cor3,
                                         font=('Verdana', 10, 'bold'))
-            s.pack()
+            s.place(relx=0.02, rely=0.3, relheight=0.08, relwidth=1)
             # Label de Livro
             f = Label(frame, text=f'Telefone de contato:   {(entry_fone.get())}', anchor=W,
                                 bg=self.cor1, fg=self.cor3,
                                         font=('Verdana', 10, 'bold'))
-            f.pack()
+            f.place(relx=0.02, rely=0.4, relheight=0.08, relwidth=1)
             # Label de Data de Retirada
             cp = Label(frame, text=f'Documento do Aluno:   {(entry_cpf.get())}', anchor=W,
                                 bg=self.cor1, fg=self.cor3,
                                         font=('Verdana', 10, 'bold'))
-            cp.pack()
+            cp.place(relx=0.02, rely=0.5, relheight=0.08, relwidth=1)
             # Label de Data Entrega
             em = Label(frame, text=f'E-mail de contato:   {(entry_email.get())}', anchor=W,
                                 bg=self.cor1, fg=self.cor3,
                                         font=('Verdana', 10, 'bold'))
-            em.pack()
+            em.place(relx=0.02, rely=0.6, relheight=0.08, relwidth=1)
             # Label de Data Entrega
             nm = Label(frame, text=f'Nome da Mãe:   {(entry_mae.get())}', anchor=W,
                                 bg=self.cor1, fg=self.cor3,
                                         font=('Verdana', 10, 'bold'))
-            nm.pack()
+            nm.place(relx=0.02, rely=0.7, relheight=0.08, relwidth=1)
             # Label de Data Entrega
             np = Label(frame, text=f'Nome do Pai:   {(entry_pai.get())}', anchor=W,
                                 bg=self.cor1, fg=self.cor3,
                                         font=('Verdana', 10, 'bold'))
-            np.pack()
+            np.place(relx=0.02, rely=0.8, relheight=0.08, relwidth=1)
             # Destruir Bt de Inf
             bt_add = Button(frame_cad, command=bt__add,
                         bg=self.cor9, bd=0, activebackground=self.cor11,
                         highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
                         text='Cadastrar', font=('Verdana', 10), cursor='hand2')
             bt_add.place(relx=0.37, rely=0.88, relheight=0.06, relwidth=0.14)
+            clean()
 
         ################# Criação dos Button #################
 
@@ -1212,6 +1226,8 @@ class Funcs(pdf,bd):
         seleciona()
     def cad_escolas(self):
         print()
+    def cad_usuarios(self):
+        print()
 
 class Application(Funcs,pdf,bd):
     def __init__(self):
@@ -1407,10 +1423,14 @@ class Application(Funcs,pdf,bd):
         self.frame_cad2 = Frame(self.frame_tela3, bd=4, bg=self.cor1,
                                     highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
         self.frame_cad2.place(relx=0, rely=0.34, relwidth=1, relheight=0.32)
-        # Frame de baixo
+        # Frame de baixo Esquerda
         self.frame_cad3 = Frame(self.frame_tela3, bd=4, bg=self.cor1,
                                     highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
-        self.frame_cad3.place(relx=0, rely=0.68, relwidth=1, relheight=0.32)
+        self.frame_cad3.place(relx=0, rely=0.68, relwidth=0.495, relheight=0.32)
+        # Frame de baixo Direita
+        self.frame_cad4 = Frame(self.frame_tela3, bd=4, bg=self.cor1,
+                                    highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
+        self.frame_cad4.place(relx=0.505, rely=0.68, relwidth=0.495, relheight=0.32)
         # Label
         # Label Aluno
         self.cad_label_aluno = Label(self.frame_cad1, text='Cadastro de alunos', bg=self.cor1, fg=self.cor3,
@@ -1420,10 +1440,14 @@ class Application(Funcs,pdf,bd):
         self.cad_label_livro = Label(self.frame_cad2, text='Cadastro de livros', bg=self.cor1, fg=self.cor3,
                                 font=('Verdana', 10, 'bold'), anchor='w')
         self.cad_label_livro.place(relx=0.02, rely=0.001, relheight=0.18, relwidth=0.35)
-        # Label sem atribuição
-        self.cad_label_livro = Label(self.frame_cad3, text='Sem atribuição', bg=self.cor1, fg=self.cor3,
-                                font=('Verdana', 10, 'bold'), anchor='w')
-        self.cad_label_livro.place(relx=0.02, rely=0.001, relheight=0.18, relwidth=0.35)
+        # Label cadastro de escolas
+        self.cad_label_escola = Label(self.frame_cad3, text='Cadastro de Escolas', bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 12, 'bold'), anchor='n')
+        self.cad_label_escola.place(relx=0, rely=0.1, relheight=0.3, relwidth=1)
+        # Label cadastro de usuarios
+        self.cad_label_usuarios = Label(self.frame_cad4, text='Cadastro de Usuários', bg=self.cor1, fg=self.cor3,
+                                font=('Verdana', 12, 'bold'), anchor='n')
+        self.cad_label_usuarios.place(relx=0, rely=0.1, relheight=0.3, relwidth=1)
         # Button
         # Button cadastrar Aluno
         self.cad_bt_aluno = Button(self.frame_cad1,
@@ -1437,17 +1461,23 @@ class Application(Funcs,pdf,bd):
                                     highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
                                     text='Adicionar', font=('Verdana', 12), cursor='hand2')
         self.cad_bt_livro.place(relx=0.75, rely=0.7, relheight=0.3, relwidth=0.25)
-        # Button cadastrar sem atribuição
-        self.cad_bt_ = Button(self.frame_cad3,
-                                    bg=self.cor9, bd=0, activebackground=self.cor11, command=print('Sem atribuição'),
+        # Button cadastrar escola
+        self.cad_bt_escola = Button(self.frame_cad3, command=self.cad_escolas,
+                                    bg=self.cor9, bd=0, activebackground=self.cor11,
                                     highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
-                                    text='N/A', font=('Verdana', 12), cursor='hand2')
-        self.cad_bt_.place(relx=0.75, rely=0.7, relheight=0.3, relwidth=0.25)
+                                    text='Adicionar', font=('Verdana', 12), cursor='hand2')
+        self.cad_bt_escola.place(relx=0.25, rely=0.6, relheight=0.3, relwidth=0.5)
+        # Button cadastrar usuario
+        self.cad_bt_usuario = Button(self.frame_cad4, command=self.cad_usuarios,
+                                    bg=self.cor9, bd=0, activebackground=self.cor11,
+                                    highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                                    text='Adicionar', font=('Verdana', 12), cursor='hand2')
+        self.cad_bt_usuario.place(relx=0.25, rely=0.6, relheight=0.3, relwidth=0.5)
         # Text
         # Text Aluno
         label_aluno1 = Label(self.frame_cad1, text='Nome do Aluno, Ano escolar, Telefone,', bg=self.cor1, fg=self.cor5,
                                 font=('Verdana', 12))
-        label_aluno2 = Label(self.frame_cad1, text='Identificação, E-mail', bg=self.cor1, fg=self.cor5,
+        label_aluno2 = Label(self.frame_cad1, text='Identificação, E-mail, Mãe, Pai', bg=self.cor1, fg=self.cor5,
                                 font=('Verdana', 12))
         label_aluno1.place(relx=0.1, rely=0.3)
         label_aluno2.place(relx=0.08, rely=0.6)
