@@ -7,11 +7,13 @@ from datetime import date, timedelta
 # Pip install sqlite3
 import sqlite3
 import webbrowser
+from reportlab.lib.units import cm
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont 
 from reportlab.platypus import SimpleDocTemplate, Image
+from docx import Document
 
 root = Tk()
 Pmw.initialise(root)
@@ -1248,6 +1250,7 @@ class Application(Funcs,pdf,bd):
         self.seleciona_f2()
         self.limpar_f1()
         self.msg_box()
+        self.anotacoes()
         #self.menus()
         root.mainloop()
     def cores(self):
@@ -1388,15 +1391,23 @@ class Application(Funcs,pdf,bd):
         # Tela 1
         self.aba1 = Frame(self.abas)
         self.aba1.configure(background=self.cor1, bd=10)
-        self.abas.add(self.aba1, text='         Inicio         ')
+        self.abas.add(self.aba1, text='       Inicio      ')
         # Tela 2
         self.aba2 = Frame(self.abas)
         self.aba2.configure(background=self.cor1, bd=10)
-        self.abas.add(self.aba2, text='        Consulta        ')
+        self.abas.add(self.aba2, text='     Consulta     ')
         # Tela 3
         self.aba3 = Frame(self.abas)
         self.aba3.configure(background=self.cor1, bd=10)
-        self.abas.add(self.aba3, text='         Cadastro         ')
+        self.abas.add(self.aba3, text='     Cadastro     ')
+        # Tela 4
+        self.aba4 = Frame(self.abas)
+        self.aba4.configure(background=self.cor1, bd=10)
+        self.abas.add(self.aba4, text='     Anotações     ')
+        # Tela 5
+        self.aba5 = Frame(self.abas)
+        self.aba5.configure(background=self.cor1, bd=10)
+        self.abas.add(self.aba5, text='     Atrasados     ')
         # Frame da Tela de Retirada de livro
         self.frame_tela1 = Frame(self.aba1, bd=4, bg=self.cor1,
                                 highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
@@ -1405,14 +1416,111 @@ class Application(Funcs,pdf,bd):
         self.frame_tela2 = Frame(self.aba2, bd=4, bg=self.cor1,
                                 highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
         self.frame_tela2.place(relx=0, rely=0, relwidth=1, relheight=1)
-        # Frame da Tela Sobre
+        # Frame da Tela Cadastros
         self.frame_tela3 = Frame(self.aba3, bd=4, bg=self.cor11,
                                 highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
         self.frame_tela3.place(relx=0, rely=0, relwidth=1, relheight=1)
+        # Frame da Tela Atrasados
+        self.frame_tela5 = Frame(self.aba5, bd=4, bg=self.cor11,
+                                highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
+        self.frame_tela5.place(relx=0, rely=0, relwidth=1, relheight=1)
         # Frame da Tela de login
         self.frame_tela0 = Frame(root, bd=4, bg=self.cor1,
                                 highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
         self.frame_tela0.place(relx=0, rely=0, relwidth=1, relheight=1)
+        # Abas Anotações
+        self.abas_a = ttk.Notebook(self.aba4)
+        self.abas_a.place(relx=0, rely=0, relwidth=1, relheight=1)
+        # Tela 1
+        self.aba_a_a = Frame(self.abas_a)
+        self.aba_a_a.configure(background=self.cor1, bd=10)
+        self.abas_a.add(self.aba_a_a, text='              Anotações sobre Alunos              ')
+        # Tela 2
+        self.aba_a_l = Frame(self.abas_a)
+        self.aba_a_l.configure(background=self.cor1, bd=10)
+        self.abas_a.add(self.aba_a_l, text='              Anotações sobre Livros              ')
+    def anotacoes(self):
+
+        ############# Parte de Criação da Função de Salvar #############
+
+        def abre_aluno():
+                webbrowser.open(f'{(nome_e_a.get())}.pdf')
+        def abre_livro():
+                webbrowser.open(f'{(nome_e_l.get())}.pdf')
+        def salva_alunos():
+            # Seleciona o Arquivo
+            relatorio_aluno = Document('ARQUIVOS\DOCX\ALUNOS\BASE\BASE_anotacoes_.docx')
+            # Edições dentro do Arquivo
+            # Salvar o Arquivo
+            relatorio_aluno.save(f'ARQUIVOS\DOCX\ALUNOS\F_anotacoes_{(nome_e_a.get())}.docx')
+        def salva_livros():
+            # Abrir PDF
+            abre_livro()
+        def teste():
+            print(t_anot_a.get("1.0",'end-1c'))
+        ############# Parte de Anotações sobre alunos #############
+
+        # Label de Titulo 1
+        tit_a = Label(self.aba_a_a,text='Anotações de Alunos',bg=self.cor1,fg=self.cor11,
+                                font=('Helvetica',15))
+        tit_a.place(relx=0,rely=0,relheight=0.09,relwidth=1)
+        # Label de Entrada de Nome 1
+        nome_a = Label(self.aba_a_a,text='Nome do(a) Aluno(a):',bg=self.cor1,fg=self.cor11,
+                                font=('Helvetica',10), anchor='w')
+        nome_a.place(relx=0,rely=0.12,relheight=0.07,relwidth=1)
+        # Entry de Entrada de Nome 1
+        nome_e_a = Entry(self.aba_a_a,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor9,fg=self.cor7, insertontime='0')
+        nome_e_a.place(relx=0.37,rely=0.11,relheight=0.09,relwidth=0.62)
+        # Label de Entrada de Nome 1
+        l_anot_a = Label(self.aba_a_a,text='Anotações',bg=self.cor1,fg=self.cor11,
+                                font=('Helvetica',12, 'bold'), anchor='n')
+        l_anot_a.place(relx=0,rely=0.24,relheight=0.08,relwidth=1)
+        # Entrada de Anotações
+        t_anot_a = Text(self.aba_a_a,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor9,fg=self.cor7)
+        t_anot_a.place(relx=0.01,rely=0.34,relheight=0.65,relwidth=0.98)
+        # Button de salvar a Anotação
+        bt_salvar_a = Button(self.aba_a_a, command=salva_alunos,
+                                    bg=self.cor6, bd=0, activebackground=self.cor6,
+                                    highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                                    text='Salvar', font=('Verdana', 10), cursor='hand2')
+        bt_salvar_a.place(relx=0.79,rely=0.25,relheight=0.08,relwidth=0.2)
+
+        ############# Parte de Anotações sobre alunos #############
+
+        # Label de Titulo 2
+        tit_l = Label(self.aba_a_l,text='Anotações de Livros',bg=self.cor1,fg=self.cor11,
+                                font=('Helvetica',15))
+        tit_l.place(relx=0,rely=0,relheight=0.09,relwidth=1)
+        # Label de Entrada de Nome 2
+        nome_l = Label(self.aba_a_l,text='Nome do Livro:',bg=self.cor1,fg=self.cor11,
+                                font=('Helvetica',10), anchor='w')
+        nome_l.place(relx=0,rely=0.12,relheight=0.07,relwidth=1)
+        # Entry de Entrada de Nome 2
+        nome_e_l = Entry(self.aba_a_l,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor9,fg=self.cor7, insertontime='0')
+        nome_e_l.place(relx=0.27,rely=0.11,relheight=0.09,relwidth=0.72)
+        # Label de Entrada de anotação 2
+        l_anot_l = Label(self.aba_a_l,text='Anotações',bg=self.cor1,fg=self.cor11,
+                                font=('Helvetica',12, 'bold'), anchor='n')
+        l_anot_l.place(relx=0,rely=0.24,relheight=0.08,relwidth=1)
+        # Entrada de Anotações
+        t_anot_l = Text(self.aba_a_l,
+                                    bg=self.cor11, bd=3, highlightbackground=self.cor6, relief=FLAT,
+                                    highlightthickness=2, highlightcolor=self.cor9,fg=self.cor7)
+        t_anot_l.place(relx=0.01,rely=0.34,relheight=0.65,relwidth=0.98)
+        # Button de salvar a Anotação
+        bt_salvar_l = Button(self.aba_a_l, command=salva_livros,
+                                    bg=self.cor6, bd=0, activebackground=self.cor6,
+                                    highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
+                                    text='Salvar', font=('Verdana', 10), cursor='hand2')
+        bt_salvar_l.place(relx=0.79,rely=0.25,relheight=0.08,relwidth=0.2)
+    def atrasados(self):
+        print()
     def cadastro(self):
         # Frames
         # Frame de cima
@@ -1494,7 +1602,7 @@ class Application(Funcs,pdf,bd):
         
         ################### Tela 1 Inicio ###################
 
-        self.print = PhotoImage(file='print.png') # Imagem de impressora
+        self.print = PhotoImage(file='ARQUIVOS\IMAGENS\print.png') # Imagem de impressora
         # Botão Cadastrar aluno
         self.f1_bt_cadastrar = Button(self.frame_tela1,
                                     bg=self.cor9, bd=0, activebackground=self.cor11, command=self.cadastrar_f1,
@@ -1716,6 +1824,8 @@ class Application(Funcs,pdf,bd):
         ########_________Tela de Cadastro_________########
         msg_add_aluno = 'Clique para adicionar um aluno'
         msg_add_livro = 'Clique para adicionar um Livro'
+        msg_add_escola = 'Clique para adicionar uma Escola'
+        msg_add_usuario = 'Clique para adicionar um Usuário'
         ###############################################
         ########________Tela de Inicio_________########
         ###############################################
@@ -1784,5 +1894,11 @@ class Application(Funcs,pdf,bd):
         # msg Button Adicionar Livro Frame Cadastro
         self.msg_add_livro = Pmw.Balloon(self.frame_cad2)
         self.msg_add_livro.bind(self.cad_bt_livro, msg_add_livro)
+        # msg Button Adicionar Escola Frame Cadastro
+        self.msg_add_livro = Pmw.Balloon(self.frame_cad3)
+        self.msg_add_livro.bind(self.cad_bt_escola, msg_add_escola)
+        # msg Button Adicionar Usuário Frame Cadastro
+        self.msg_add_livro = Pmw.Balloon(self.frame_cad4)
+        self.msg_add_livro.bind(self.cad_bt_usuario, msg_add_usuario)
 
 Application()
