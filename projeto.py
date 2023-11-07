@@ -44,39 +44,61 @@ class bd():
         self.conecta_bd_f1()
         # Criando a tabela da página de inicio
         self.cursor.execute('''
-            CREATE TABLE IF NOT EXISTS alunos(
-                cod INTEGER PRIMARY KEY, 
-                nomes_alunos CHAR(40) NOT NULL,
-                series_alunos CHAR(10),
-                nomes_livros CHAR(20),
-                data_retirada CHAR(15),
-                data_entregada CHAR(15)
+            CREATE TABLE IF NOT EXISTS alunos (
+                cod             INTEGER   PRIMARY KEY,
+                nomes_alunos    CHAR (40) REFERENCES identidade (nome),
+                series_alunos   CHAR (10) REFERENCES identidade (serie),
+                nomes_livros    CHAR (20) REFERENCES livros (nome_l),
+                data_retirada   CHAR (15),
+                data_entregada  CHAR (15),
+            FOREIGN KEY (
+                nomes_alunos,
+                series_alunos
+                        )
+            REFERENCES identidade (nome,serie),
+                            
+            FOREIGN KEY (
+                nomes_livros
+                        )
+            REFERENCES livros (nome_l)  
             );
         ''')
         self.conn.commit(); print('Banco de Dados 1 criado (Coleta)')
         # Criando a tabela do nome do aluno
         self.cursor.execute('''
-            CREATE TABLE IF NOT EXISTS identidade(
-                cod_1 INTEGER PRIMARY KEY, 
-                nome CHAR(40),
-                serie CHAR(10),
-                telefone CHAR(20),
-                identificacao CHAR(20),
-                email CHAR(40),
-                mae CHAR(40),
-                pai CHAR(40)
+            CREATE TABLE IF NOT EXISTS identidade (
+                cod_1           INTEGER   PRIMARY KEY,
+                nome            CHAR (40) REFERENCES alunos (nomes_alunos),
+                serie           CHAR (10) REFERENCES alunos (series_alunos),
+                telefone        CHAR (20),
+                identificacao   CHAR (20),
+                email           CHAR (40),
+                mae             CHAR (40),
+                pai             CHAR (40),
+            FOREIGN KEY (
+                nome
+                        )
+            REFERENCES alunos (nomes_alunos),
+            FOREIGN KEY (
+                serie
+                        )
+            REFERENCES alunos (series_alunos) 
             );
         ''')
         self.conn.commit(); print('Banco de Dados 2 criado (Alunos)')
         # Criando a tabela de livros
         self.cursor.execute('''
-            CREATE TABLE IF NOT EXISTS livros(
-                cod_2 INTEGER PRIMARY KEY, 
-                nome_l CHAR(40),
-                ano CHAR(10),
-                autor CHAR(20),
-                genero CHAR(20),
-                numero CHAR(6)
+            CREATE TABLE IF NOT EXISTS livros (
+                cod_2           INTEGER   PRIMARY KEY,
+                nome_l          CHAR (40) REFERENCES alunos (nomes_livros),
+                ano             CHAR (10),
+                autor           CHAR (20),
+                genero          CHAR (20),
+                numero          CHAR (6),
+            FOREIGN KEY (
+                nome_l
+                        )
+            REFERENCES alunos (nomes_livros) 
             );
         ''')
         self.conn.commit(); print('Banco de Dados 3 criado (Livros)')
@@ -98,11 +120,11 @@ class bd():
 
 class pdf(bd):
     def abrir_comprovante(self):
-        webbrowser.open('comprovante.pdf')
+        webbrowser.open(f'ARQUIVOS\PDF\COMPROVANTE\comprovante_{(self.nome_aluno)}.pdf')
     def geracomprovante(self):
-        self.c1 = canvas.Canvas('comprovante.pdf')
         # Chamar as Variaveis
         self.variaveis_f1()
+        self.c1 = canvas.Canvas(f'ARQUIVOS\PDF\COMPROVANTE\comprovante_{(self.nome_aluno)}.pdf')
         ############################ FOLHA 1 PARTE DO ALUNO
         # Titulo 1 na folha
         self.c1.setFont('Helvetica-Bold', 24)
@@ -131,8 +153,9 @@ class pdf(bd):
         self.c1.setFont('Helvetica', 16)
         self.c1.drawString(40,745, 'Telefone: (16) 3984-9124')
         # Logo da Univesp no PDF do comprovante
-        self.c1.drawImage('uni_completo_colorido.png', 380, 735, width=170, height=60)
-        self.c1.drawImage('uni_completo_colorido.png', 30, 55, width=170, height=60)
+        univesp_logo = PhotoImage(file="ARQUIVOS\IMAGENS\completo_colorido.png")
+        self.c1.drawImage("ARQUIVOS\IMAGENS\completo_colorido.png", 380, 735, width=170, height=60)
+        self.c1.drawImage("ARQUIVOS\IMAGENS\completo_colorido.png", 30, 55, width=170, height=60)
         ############################ FOLHA 1 PARTE DO PROFESSOR
         # Linha de separação
         self.c1.setFont('Helvetica', 14)
@@ -166,12 +189,12 @@ class pdf(bd):
         self.c1.save()
         self.abrir_comprovante()
     def abrir_relatorio(self):
-        webbrowser.open('relatorio.pdf')
+        webbrowser.open(f'ARQUIVOS\PDF\RELATORIO\\relatorio_{(self.e_c.get())}.pdf')
     def gerarelatorio(self):
         # Variaveis
         self.variaveis_imp2()
         # Criar PDF
-        self.c2 = canvas.Canvas('relatorio.pdf')
+        self.c2 = canvas.Canvas(f'ARQUIVOS\PDF\RELATORIO\\relatorio_{(self.e_c.get())}.pdf')
         # Titulo PDF
         self.c2.setFont('Helvetica-Bold', 24)
         self.c2.drawString(80, 750, 'Relatório do Livro')
@@ -221,7 +244,7 @@ class pdf(bd):
         self.c2.drawString(25, 125, '______________________________________________________________________')
         self.c2.drawString(25, 105, '______________________________________________________________________')
         # Logo Univesp
-        self.c2.drawImage('uni_completo_colorido.png', 370, 720, width=170, height=60)
+        self.c2.drawImage('ARQUIVOS\IMAGENS\completo_colorido.png', 370, 720, width=170, height=60)
         # Salvar folha e abrir no navegador
         self.c2.showPage()
         self.c2.save()
@@ -1270,8 +1293,8 @@ class Application(Funcs,pdf,bd):
         self.root.title('Biblioteca')
         self.root.geometry('450x400')
         #self.root.resizable(False, False)
-        self.root.minsize(width=360, height=310)
-        self.root.maxsize(width=660, height=610)
+        #self.root.minsize(width=360, height=310)
+        #self.root.maxsize(width=660, height=610)
     def aba_login(self):
         # Label de Login na parte superior
         self.l_label_tit = Label(self.frame_tela0,text='LOGIN',bg=self.cor1,fg=self.cor3,
