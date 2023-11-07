@@ -14,6 +14,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont 
 from reportlab.platypus import SimpleDocTemplate, Image
 from docx import Document
+from docx2pdf import convert
 
 root = Tk()
 Pmw.initialise(root)
@@ -1466,21 +1467,42 @@ class Application(Funcs,pdf,bd):
 
         ############# Parte de Criação da Função de Salvar #############
 
-        def abre_aluno():
-                webbrowser.open(f'{(nome_e_a.get())}.pdf')
-        def abre_livro():
-                webbrowser.open(f'{(nome_e_l.get())}.pdf')
         def salva_alunos():
+            if nome_e_a.get() == '' or t_anot_a.get("1.0",'end-1c') == '':
+                messagebox.showinfo(title='ERRO!',message='Você não preencheu todas as informações')
             # Seleciona o Arquivo
-            relatorio_aluno = Document('ARQUIVOS\DOCX\ALUNOS\BASE\BASE_anotacoes_.docx')
+            relatorio_aluno = Document('ARQUIVOS\ANOT\ALUNOS\BASE\BASE_anotacoes_.docx')
             # Edições dentro do Arquivo
-            # Salvar o Arquivo
-            relatorio_aluno.save(f'ARQUIVOS\DOCX\ALUNOS\F_anotacoes_{(nome_e_a.get())}.docx')
+            for paragrafo in relatorio_aluno.paragraphs:
+                paragrafo.text = paragrafo.text.replace('X', nome_e_a.get())
+                paragrafo.text = paragrafo.text.replace('W', self.format_data_retirada)
+                paragrafo.text = paragrafo.text.replace('Y', t_anot_a.get("1.0",'end-1c'))
+            # Salvar o Arquivo DOCX
+            relatorio_aluno.save(f'ARQUIVOS\ANOT\ALUNOS\PRONTO\F_anotacoes_{(nome_e_a.get())}.docx')
+            # Converte DOCX para PDF
+            convert(f'ARQUIVOS\ANOT\ALUNOS\PRONTO\F_anotacoes_{(nome_e_a.get())}.docx',
+                    f'ARQUIVOS\ANOT\ALUNOS\PRONTO\PDF\\anotacoes_{(nome_e_a.get())}.pdf')
+            webbrowser.open(f'ARQUIVOS\ANOT\ALUNOS\PRONTO\PDF\\anotacoes_{(nome_e_a.get())}.pdf')
+            nome_e_a.delete(0, END)
+            t_anot_a.delete("1.0",'end-1c')
         def salva_livros():
-            # Abrir PDF
-            abre_livro()
-        def teste():
-            print(t_anot_a.get("1.0",'end-1c'))
+            if nome_e_l.get() == '' or t_anot_l.get("1.0",'end-1c') == '':
+                messagebox.showinfo(title='ERRO!',message='Você não preencheu todas as informações')
+            # Seleciona o Arquivo
+            relatorio_aluno = Document('ARQUIVOS\ANOT\ALUNOS\BASE\BASE_anotacoes_.docx')                # Edições dentro do Arquivo
+            for paragrafo in relatorio_aluno.paragraphs:
+                paragrafo.text = paragrafo.text.replace('X', nome_e_l.get())
+                paragrafo.text = paragrafo.text.replace('W', self.format_data_retirada)
+                paragrafo.text = paragrafo.text.replace('Y', t_anot_l.get("1.0",'end-1c'))
+            # Salvar o Arquivo em DOCX
+            relatorio_aluno.save(f'ARQUIVOS\ANOT\LIVROS\PRONTO\F_anotacoes_{(nome_e_l.get())}.docx')
+            # Converter DOCX para PDF
+            convert(f'ARQUIVOS\ANOT\LIVROS\PRONTO\F_anotacoes_{(nome_e_l.get())}.docx',
+                    f'ARQUIVOS\ANOT\LIVROS\PRONTO\PDF\\anotacoes_{(nome_e_l.get())}.pdf')
+            webbrowser.open(f'ARQUIVOS\ANOT\LIVROS\PRONTO\PDF\\anotacoes_{(nome_e_l.get())}.pdf')
+            nome_e_l.delete(0, END)
+            t_anot_l.delete("1.0",'end-1c')
+
         ############# Parte de Anotações sobre alunos #############
 
         # Label de Titulo 1
