@@ -36,7 +36,7 @@ class bd():
         self.e_d1.get()
         self.e_d2.get()
     def conecta_bd_f1(self):
-        self.conn = sqlite3.connect('livros.bd'); print('Conectando ao Banco de Dados')
+        self.conn = sqlite3.connect('ARQUIVOS\BD\livros.bd'); print('Conectando ao Banco de Dados')
         self.cursor = self.conn.cursor()
     def desconecta_bd_f1(self):
         self.conn.close(); print('Desconectando o Banco de Dados')
