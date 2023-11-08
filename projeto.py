@@ -294,6 +294,7 @@ class Funcs(pdf,bd):
     def seleciona_f1(self):
         #Selecionar a Treeview
         self.inser_bd.delete(*self.inser_bd.get_children())
+        self.atrasa_bd.delete(*self.atrasa_bd.get_children())
         # Conectar o BD
         self.conecta_bd_f1()
         # Criar variavel sem o self
@@ -309,6 +310,7 @@ class Funcs(pdf,bd):
         # Adicionar na Treeview
         for i in lista1:
             self.inser_bd.insert("", END, values=i)
+            self.atrasa_bd.insert("", END, values=i)
         # Desconectar o BD
         self.desconecta_bd_f1()
     def seleciona_f2(self):
@@ -1239,15 +1241,15 @@ class Funcs(pdf,bd):
         cad_bd.heading('#3', text='Ano')
         cad_bd.heading('#4', text='Autor')
         cad_bd.heading('#5', text='Genero')
-        cad_bd.heading('#6', text='N° de páginas')
+        cad_bd.heading('#6', text='N°')
         # Tamanho das colunas
         cad_bd.column('#0', width=0,stretch=0)
         cad_bd.column('#1', width=1,stretch=1)
         cad_bd.column('#2', width=100,stretch=1)
-        cad_bd.column('#3', width=25,stretch=1)
-        cad_bd.column('#4', width=95,stretch=1)
+        cad_bd.column('#3', width=15,stretch=1)
+        cad_bd.column('#4', width=105,stretch=1)
         cad_bd.column('#5', width=75,stretch=1)
-        cad_bd.column('#6', width=0,stretch=0)
+        cad_bd.column('#6', width=15,stretch=1)
         cad_bd.bind('<Double-1>', db_click)
         seleciona()
     def cad_escolas(self):
@@ -1270,11 +1272,13 @@ class Application(Funcs,pdf,bd):
         self.treeview_f1()
         self.treeview_f2()
         self.montatabelas_f1()
+        self.atrasados()
         self.seleciona_f1()
         self.seleciona_f2()
         self.limpar_f1()
         self.msg_box()
         self.anotacoes()
+        
         #self.menus()
         root.mainloop()
     def cores(self):
@@ -1320,7 +1324,10 @@ class Application(Funcs,pdf,bd):
         self.l_label_senha.place(relx=0.06,rely=0.4)
         # Comando senha
         def valida_usuario():
-            print()
+            if self.l_entry_sen1.get() != 'admin' and self.l_entry_usu.get() != 'admin':
+                messagebox.showinfo(title='ERRO!',message='Credenciais invalidas')
+            else:
+                self.frame_tela0.destroy()
         # Entry de senha
         self.l_entry_sen1 = Entry(self.frame_tela0,show='*',
                                     bg=self.cor11,bd=3,highlightbackground=self.cor9,relief=FLAT,
@@ -1342,7 +1349,7 @@ class Application(Funcs,pdf,bd):
         self.l_label_ck.place(relx=0.07,rely=0.56)
         # Botão de Login
         self.l_bt_login = Button(self.frame_tela0,
-                                    bg=self.cor9,bd=0,activebackground=self.cor11,command=self.frame_tela0.destroy,
+                                    bg=self.cor9,bd=0,activebackground=self.cor11,command=valida_usuario,
                                     highlightbackground=self.cor2,highlightthickness=1,fg=self.cor3,
                                     text='Entrar',font=('Verdana', 12),cursor='hand2')
         self.l_bt_login.place(relx=0.05, rely=0.63, relheight=0.08, relwidth=0.2)
@@ -1565,7 +1572,25 @@ class Application(Funcs,pdf,bd):
                                     text='Salvar', font=('Verdana', 10), cursor='hand2')
         bt_salvar_l.place(relx=0.79,rely=0.25,relheight=0.08,relwidth=0.2)
     def atrasados(self):
-        print()
+        # Criação da Treeview
+        self.atrasa_bd = ttk.Treeview(self.frame_tela5, columns=('col1', 'col2', 'col3', 'col4', 'col5', 'col6'))
+        self.atrasa_bd.place(relx=0, rely=0, relheight=1, relwidth=1)
+        # Cabeçalho da Treeview
+        self.atrasa_bd.heading('#0', text='')
+        self.atrasa_bd.heading('#1', text='#')
+        self.atrasa_bd.heading('#2', text='Aluno')
+        self.atrasa_bd.heading('#3', text='')
+        self.atrasa_bd.heading('#4', text='Livro')
+        self.atrasa_bd.heading('#5', text='')
+        self.atrasa_bd.heading('#6', text='Entrega')
+        # Tamanho das colunas
+        self.atrasa_bd.column('#0', width=0, stretch=0)
+        self.atrasa_bd.column('#1', width=1, stretch=1)
+        self.atrasa_bd.column('#2', width=110, stretch=1)
+        self.atrasa_bd.column('#3', width=0, stretch=0)
+        self.atrasa_bd.column('#4', width=130, stretch=1)
+        self.atrasa_bd.column('#5', width=0, stretch=0)
+        self.atrasa_bd.column('#6', width=80, stretch=1)
     def cadastro(self):
         # Frames
         # Frame de cima
