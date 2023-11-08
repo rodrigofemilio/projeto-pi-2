@@ -117,7 +117,6 @@ class bd():
         ''')
         self.conn.commit(); print('Banco de Dados 4 criado (Escolas)')
         self.desconecta_bd_f1()
-    #def usuarios(self):
 
 class pdf(bd):
     def abrir_comprovante(self):
