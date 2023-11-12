@@ -1143,63 +1143,6 @@ class Funcs(pdf,bd):
                 entry_autor.insert(END, col4)
                 entry_genero.insert(END, col5)
                 entry_numero.insert(END, col6)
-
-                # Criação do Botão de Informações
-                bt_inf = Button(frame_cad, command=bt__inf,
-                        bg=self.cor9, bd=0, activebackground=self.cor11,
-                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
-                        text='Informações', font=('Verdana', 10), cursor='hand2')
-                bt_inf.place(relx=0.37, rely=0.88, relheight=0.06, relwidth=0.14)
-        def bt__inf():
-            # Criação da tela de relatório
-            consul_t2 = Tk()
-            consul_t2.title('Informações do livro')
-            consul_t2.attributes('-topmost', True)
-            consul_t2.geometry('550x500')
-            frame = Frame(consul_t2, bd=4, bg=self.cor1,
-                            highlightbackground=self.cor2, highlightthickness=0.5, highlightcolor=self.cor2)
-            frame.place(relx=0, rely=0, relwidth=1, relheight=1)
-            # Criação das Labels                # Label do titulo
-            inf = Label(frame, text='Dados da coleta',
-                                bg=self.cor1, fg=self.cor3,
-                                        font=('Verdana', 14, 'bold'))
-            inf.pack(padx=0,pady=0)
-            # Label de Codigo
-            c = Label(frame, text=f'Código de coleta:   {(entry_cod.get())}', anchor=W,
-                        bg=self.cor1, fg=self.cor3,
-                                font=('Verdana', 10, 'bold'))
-            c.pack()
-            # Label de Nome
-            n = Label(frame, text=f'Nome do Livro:   {(entry_nome.get())}', anchor=W,
-                                bg=self.cor1, fg=self.cor3,
-                                        font=('Verdana', 10, 'bold'))
-            n.pack()
-            # Label de Serie
-            s = Label(frame, text=f'Ano de Lançamento:   {(entry_ano.get())}', anchor=W,
-                                bg=self.cor1, fg=self.cor3,
-                                        font=('Verdana', 10, 'bold'))
-            s.pack()
-            # Label de Livro
-            f = Label(frame, text=f'Nome do Autor do Livro:   {(entry_autor.get())}', anchor=W,
-                                bg=self.cor1, fg=self.cor3,
-                                        font=('Verdana', 10, 'bold'))
-            f.pack()
-            # Label de Data de Retirada
-            cp = Label(frame, text=f'Genero do Livro:   {(entry_genero.get())}', anchor=W,
-                                bg=self.cor1, fg=self.cor3,
-                                        font=('Verdana', 10, 'bold'))
-            cp.pack()
-            # Label de Data Entrega
-            em = Label(frame, text=f'Número de Página do Livro:   {(entry_numero.get())}', anchor=W,
-                                bg=self.cor1, fg=self.cor3,
-                                        font=('Verdana', 10, 'bold'))
-            em.pack()
-            # Destruir Bt de Inf
-            bt_add = Button(frame_cad, command=bt__add,
-                        bg=self.cor9, bd=0, activebackground=self.cor11,
-                        highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
-                        text='Cadastrar', font=('Verdana', 10), cursor='hand2')
-            bt_add.place(relx=0.37, rely=0.88, relheight=0.06, relwidth=0.14)
         
         ################# Criação dos Button #################
 
@@ -1495,7 +1438,7 @@ class Application(Funcs,pdf,bd):
             if nome_e_l.get() == '' or t_anot_l.get("1.0",'end-1c') == '':
                 messagebox.showinfo(title='ERRO!',message='Você não preencheu todas as informações')
             # Seleciona o Arquivo
-            relatorio_aluno = Document('ARQUIVOS\ANOT\ALUNOS\BASE\BASE_anotacoes_.docx')                # Edições dentro do Arquivo
+            relatorio_aluno = Document('ARQUIVOS\ANOT\LIVROS\BASE\BASE_anotacoes_.docx')                # Edições dentro do Arquivo
             for paragrafo in relatorio_aluno.paragraphs:
                 paragrafo.text = paragrafo.text.replace('X', nome_e_l.get())
                 paragrafo.text = paragrafo.text.replace('W', self.format_data_retirada)
