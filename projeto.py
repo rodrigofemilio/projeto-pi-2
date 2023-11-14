@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+from PIL import Image, ImageTk
 # Pip install pmw
 import Pmw
 from datetime import date, timedelta
@@ -15,6 +16,9 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import SimpleDocTemplate, Image
 from docx import Document
 from docx2pdf import convert
+# Pip install tkinterweb
+import tkinterweb as tkweb
+import sys
 
 root = Tk()
 Pmw.initialise(root)
@@ -594,7 +598,6 @@ class Funcs(pdf,bd):
                         font=('Verdana', 9, 'bold'))
         pai.place(relx=0.02, rely=0.81, relheight=0.08, relwidth=1)
 
-
         ################# Criação das Entrys #################
 
         # Entry do Codigo do Aluno
@@ -869,7 +872,7 @@ class Funcs(pdf,bd):
 
         ################# Criação dos Button #################
 
-        # Button de Adicionar informações no BD
+        # Button de Adicionar informações no BD 
         bt_add = Button(frame_cad, command=bt__add,
                         bg=self.cor9, bd=0, activebackground=self.cor11,
                         highlightbackground=self.cor2, highlightthickness=1, fg=self.cor3,
@@ -1239,6 +1242,7 @@ class Application(Funcs,pdf,bd):
         # Janela principal do aplicativo
         self.root.title('Biblioteca')
         self.root.geometry('450x400')
+        self.root.iconbitmap('ARQUIVOS\IMAGENS\icone.ico')
         #self.root.resizable(False, False)
         #self.root.minsize(width=360, height=310)
         #self.root.maxsize(width=660, height=610)
